@@ -13,7 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
@@ -22,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Api.SysAquarismo.Domain\Api.SysAquarismo.Domain.csproj" />
-    <ProjectReference Include="..\Api.SysAquarismo.Service\Api.SysAquarismo.Service.csproj" />
+    <ProjectReference Include="..\Api.SysAquarismo.Infrastructure\Api.SysAquarismo.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
