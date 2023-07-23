@@ -1,21 +1,25 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
-using Microsoft.AspNetCore.Authorization;
+using Api.SysAquarismo.Domain.Interfaces;
+using Api.SysAquarismo.Domain.Models.Usuario;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.SysAquarismo.Application.Controllers;
 
-[Authorize]
 [ApiController]
 [Produces("application/json")]
 [Route("api/v1/usuario")]
 public class UsuarioController : ControllerBase
 {
-    readonly ILogger _logger;
-    public UsuarioController(ILogger logger)
+    readonly private IMapper _mapper;
+    readonly private IUsuarioRepository _repository;
+
+    public UsuarioController(IMapper mapper, IUsuarioRepository repository)
     {
-        _logger = logger;
+        _mapper = mapper;
+        _repository = repository;
     }
-    
+
 
     /// <summary>
     /// Cadastra usuario no sistema
@@ -25,15 +29,15 @@ public class UsuarioController : ControllerBase
     /// <response code="201">Usuario cadastrado com sucesos</response>
     /// <response code="400">Falha ao cadastrar usuario</response>
     [HttpPost("cadastra")]
-    public IActionResult Cadastra([FromBody] CreateUsuarioDTO createUsuario)
+    public async Task<IActionResult> Cadastra([FromBody] CreateUsuarioDTO createUsuario)
     {
         try
         {
-
+            Usuario usuario = _mapper.Map<Usuario>(createUsuario);
+            await _repository.InsertUsuario(usuario);
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
 
@@ -49,15 +53,15 @@ public class UsuarioController : ControllerBase
     /// <response code="400">Falha ao cadastrar usuario</response>
     /// <response code="404">Usuario não cadastrado no sistema</response>
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginUsuarioDTO loginUsuario)
+    public async Task<IActionResult> Login([FromBody] LoginUsuarioDTO loginUsuario)
     {
         try
         {
-
+            Usuario usuario = _mapper.Map<Usuario>(loginUsuario);
+            await _repository.LoginUsuario(usuario);
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
 
@@ -80,7 +84,6 @@ public class UsuarioController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
 
@@ -103,7 +106,6 @@ public class UsuarioController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
 
