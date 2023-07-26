@@ -1,17 +1,12 @@
 ﻿using Api.SysAquarismo.Domain.Models.Usuario;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Api.SysAquarismo.Infrastructure.QD.UsuarioQD
+namespace Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
+
+public static class UsuarioQD
 {
-    public static class UsuarioQD
+    public static string QueryCriaUsuario(Usuario usuario)
     {
-        public static String QueryCriaUsuario(Usuario usuario)
-        {
-            return $@"
+        return $@"
             INSERT INTO [dbo].[TB_USUARIO]
                    ([NOME]
                    ,[IDADE]
@@ -30,6 +25,5 @@ namespace Api.SysAquarismo.Infrastructure.QD.UsuarioQD
                    ,{usuario.Ds_Nome_Usuario}
                    ,{usuario.Ds_Senha}
                    ,{usuario.Ds_Senha})";
-        }
     }
 }

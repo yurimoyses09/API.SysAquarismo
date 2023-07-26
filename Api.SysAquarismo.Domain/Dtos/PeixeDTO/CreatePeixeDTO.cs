@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Api.SysAquarismo.Domain.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.SysAquarismo.Domain.Dtos.PeixeDTO;
 
@@ -12,7 +13,7 @@ public class CreatePeixeDTO
     [MaxLength(50, ErrorMessage = "O tamanho do nome da especie nao pode ultrapassar 50 caracteres")]
     public string Ds_Nome_Especie { get; set; }
     public string Ds_Descricao { get; set; }
-    public string Sexo { get; set; }
+    public Sexo Id_Sexo { get; set; }
     public double Vl_Peso { get; set; }
     public double Vl_Tamanho { get; set; }
 
@@ -25,12 +26,12 @@ public class CreatePeixeDTO
     public DateTime Ds_Data_Aquisicao { get; set; }
     public string Ds_Imagem { get; set; }
 
-    public CreatePeixeDTO(string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, double vl_Tamanho, string ds_status_Saude, DateTime ds_Data_Morte, string ds_doenca, DateTime ds_Data_Aquisicao, string ds_Imagem)
+    public CreatePeixeDTO(string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, Sexo id_Sexo, double vl_Peso, double vl_Tamanho, string ds_status_Saude, DateTime ds_Data_Morte, string ds_doenca, DateTime ds_Data_Aquisicao, string ds_Imagem)
     {
         Ds_Nome_Peixe = ds_Nome_Peixe;
         Ds_Nome_Especie = ds_Nome_Especie;
         Ds_Descricao = ds_Descricao;
-        Sexo = sexo;
+        Id_Sexo = id_Sexo;
         Vl_Peso = vl_Peso;
         Vl_Tamanho = vl_Tamanho;
         Ds_status_Saude = ds_status_Saude;
