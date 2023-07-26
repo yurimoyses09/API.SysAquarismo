@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Api.SysAquarismo.Domain.Enum;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
@@ -20,7 +21,7 @@ public class CreateUsuarioDTO
 
     [JsonProperty("sexo")]
     [Required(ErrorMessage = "Atribuido de sexo deve ser preenchido")]
-    public string Ds_Sexo { get; set; }
+    public Sexo Ds_Sexo { get; set; }
 
     [JsonProperty("pais")]
     public string Ds_Pais { get; set; }
@@ -34,9 +35,7 @@ public class CreateUsuarioDTO
     [Required(ErrorMessage = "Atribuido de senha deve ser preenchido")]
     public string Ds_Senha { get; set; }
 
-    public CreateUsuarioDTO() { }
-
-    public CreateUsuarioDTO(string nome_Usuario, int idade, string ds_Telefone, string ds_Sexo, string ds_Pais, string ds_Nome_Usuario, string ds_Senha)
+    public CreateUsuarioDTO(string nome_Usuario, int idade, string ds_Telefone, Sexo ds_Sexo, string ds_Pais, string ds_Nome_Usuario, string ds_Senha)
     {
         Nome_Usuario = nome_Usuario;
         Idade = idade;

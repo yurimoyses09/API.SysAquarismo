@@ -25,11 +25,6 @@ public class CreatePeixeDTO
     public DateTime Ds_Data_Aquisicao { get; set; }
     public string Ds_Imagem { get; set; }
 
-    public CreatePeixeDTO()
-    {
-        
-    }
-
     public CreatePeixeDTO(string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, double vl_Tamanho, string ds_status_Saude, DateTime ds_Data_Morte, string ds_doenca, DateTime ds_Data_Aquisicao, string ds_Imagem)
     {
         Ds_Nome_Peixe = ds_Nome_Peixe;

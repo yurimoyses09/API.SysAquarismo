@@ -1,49 +1,41 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models.Usuario;
-using Api.SysAquarismo.Infrastructure.Data.Context;
 
-namespace Api.SysAquarismo.Infrastructure.Data.Repository
+namespace Api.SysAquarismo.Infrastructure.Data.Repository;
+
+public class UsuarioRepository : IUsuarioRepository
 {
-    public class UsuarioRepository : IUsuarioRepository
+    private readonly IContext _context;
+    public UsuarioRepository(IContext context)
     {
-        private readonly UsuarioContext _context;
-        public UsuarioRepository(UsuarioContext context)
-        {
-            _context = context;
-        }
-        public Task GetUsuario(string nm_usuario)
-        {
-            throw new NotImplementedException();
-        }
+        _context = context;
+    }
+    public Task GetUsuario(string nm_usuario)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task InsertUsuario(Usuario usuario)
+    public async Task<int> InsertUsuario(Usuario usuario)
+    {
+        try
         {
-            try
-            {
-                await _context.AddAsync(usuario);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+            string query = QD.UsuarioQD.UsuarioQD.QueryCriaUsuario(usuario);
 
-        public async Task<dynamic> LoginUsuario(Usuario usuario)
-        {
-            try
-            {
-                return _context.Usuarios.Where(x => x.Ds_Nome_Usuario == usuario.Ds_Nome_Usuario && x.Ds_Senha == usuario.Ds_Senha).FirstOrDefault();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return _context.InsertAsync(query).Result;
         }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
 
-        public Task ResetSenha(Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
+    public async Task<dynamic> LoginUsuario(Usuario usuario)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task ResetSenha(Usuario usuario)
+    {
+        throw new NotImplementedException();
     }
 }
