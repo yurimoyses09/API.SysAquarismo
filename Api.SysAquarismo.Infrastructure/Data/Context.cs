@@ -6,17 +6,16 @@ namespace Api.SysAquarismo.Infrastructure.Data;
 
 public class Context : IContext
 {
-    private SqlConnection _connection;
+    private readonly SqlConnection _connection;
 
-    public Context(SqlConnection connection = null)
+    public Context(SqlConnection? connection = null)
     {
         try
         {
-            string connectionString = "";
-            using (connection = new SqlConnection(connectionString))
-            {
-                connection.OpenAsync();
-            }
+            var connectionString = Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User);
+            connection = new SqlConnection(connectionString);
+            
+            connection.Open();
 
             _connection = connection;
         }
@@ -26,23 +25,24 @@ public class Context : IContext
         }
     }
 
-    public async Task<IEnumerable<dynamic>> SelectAsync(string query)
-    {
-        return await _connection.QueryAsync<dynamic>(query);
-    }
+    public async Task<IEnumerable<dynamic>> SelectAsync(string query) => await _connection.QueryAsync<dynamic>(query);
 
-    public async Task<int> InsertAsync(string query)
-    {
-        return await _connection.ExecuteAsync(query);
-    }
+    public async Task<int> InsertAsync(string query) => await _connection.ExecuteAsync(query);
 
-    public async Task<int> DeleteAsync(string query)
-    {
-        return await _connection.ExecuteAsync(query);
-    }
+    public async Task<int> DeleteAsync(string query) => await _connection.ExecuteAsync(query);
+    
+    public async Task<int> UpdateAsync(string query) => await _connection.ExecuteAsync(query);
 
-    public async Task<int> UpdateAsync(string query)
+    public async Task CloseConnection()
     {
-        return await _connection.ExecuteAsync(query);
+        try
+        {
+            if (_connection.State == System.Data.ConnectionState.Closed)
+                await _connection.CloseAsync();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 }

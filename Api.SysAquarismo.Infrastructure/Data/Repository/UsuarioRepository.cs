@@ -1,5 +1,6 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -19,13 +20,17 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            string query = QD.UsuarioQD.UsuarioQD.QueryCriaUsuario(usuario);
+            string query = UsuarioQD.QueryCriaUsuario(usuario);
 
             return _context.InsertAsync(query).Result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
         }
     }
 

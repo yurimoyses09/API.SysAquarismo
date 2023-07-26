@@ -21,7 +21,7 @@ public class CreateUsuarioDTO
 
     [JsonProperty("sexo")]
     [Required(ErrorMessage = "Atribuido de sexo deve ser preenchido")]
-    public Sexo Ds_Sexo { get; set; }
+    public Sexo Id_Sexo { get; set; }
 
     [JsonProperty("pais")]
     public string Ds_Pais { get; set; }
@@ -35,12 +35,12 @@ public class CreateUsuarioDTO
     [Required(ErrorMessage = "Atribuido de senha deve ser preenchido")]
     public string Ds_Senha { get; set; }
 
-    public CreateUsuarioDTO(string nome_Usuario, int idade, string ds_Telefone, Sexo ds_Sexo, string ds_Pais, string ds_Nome_Usuario, string ds_Senha)
+    public CreateUsuarioDTO(string nome_Usuario, int idade, string ds_Telefone, Sexo id_Sexo, string ds_Pais, string ds_Nome_Usuario, string ds_Senha)
     {
         Nome_Usuario = nome_Usuario;
         Idade = idade;
         Ds_Telefone = ds_Telefone;
-        Ds_Sexo = ds_Sexo;
+        Id_Sexo = id_Sexo;
         Ds_Pais = ds_Pais;
         Ds_Nome_Usuario = ds_Nome_Usuario;
         Ds_Senha = ds_Senha;

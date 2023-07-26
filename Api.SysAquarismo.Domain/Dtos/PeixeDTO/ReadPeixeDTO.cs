@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api.SysAquarismo.Domain.Dtos.PeixeDTO
+namespace Api.SysAquarismo.Domain.Dtos.PeixeDTO;
+
+public class ReadPeixeDTO
 {
-    public class ReadPeixeDTO
-    {
-    }
 }
