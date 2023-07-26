@@ -18,8 +18,6 @@ public class LoginUsuarioDTO
     [Required(ErrorMessage = "Atribuido de senha_repetida deve ser preenchido")]
     public string Senha_Repetida { get; set; }
 
-    public LoginUsuarioDTO() { }
-
     public LoginUsuarioDTO(string nome_Usuario, string senha, string senha_Repetida)
     {
         Nome_Usuario = nome_Usuario;

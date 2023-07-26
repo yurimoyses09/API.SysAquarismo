@@ -1,8 +1,8 @@
 using Api.SysAquarismo.Domain.Interfaces;
-using Api.SysAquarismo.Infrastructure.Data.Context;
+using Api.SysAquarismo.Infrastructure.Data;
 using Api.SysAquarismo.Infrastructure.Data.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.PlatformAbstractions;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,13 +32,11 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-var connectionString = builder.Configuration.GetConnectionString("StringConnection");
-builder.Services.AddDbContext<UsuarioContext>(opts => opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IPeixeRepository, PeixeRepository>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<IPeixeRepository, PeixeRepository>();
+builder.Services.AddTransient<IContext, Context>();
 
 var app = builder.Build();
 

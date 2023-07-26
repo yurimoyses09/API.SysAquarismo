@@ -1,14 +1,13 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models.Peixe;
-using Api.SysAquarismo.Infrastructure.Data.Context;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
 public class PeixeRepository : IPeixeRepository
 {
 
-    private readonly PeixeContext _context;
-    public PeixeRepository(PeixeContext context = null)
+    private readonly IContext _context;
+    public PeixeRepository(IContext context)
     {
         _context = context;
     }
