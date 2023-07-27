@@ -4,7 +4,7 @@ namespace Api.SysAquarismo.Domain.Interfaces;
 
 public interface IPeixeRepository
 {
-    Task InsertPeixe(Peixe peixe);
+    Task<int> InsertPeixe(Peixe peixe);
     Task DeletePeixe(Peixe peixe);
     Task GetPeixe();
     Task UpdatePeixe(Peixe peixe);

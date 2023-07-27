@@ -2,13 +2,12 @@
 using Api.SysAquarismo.Domain.Models.Usuario;
 using AutoMapper;
 
-namespace Api.SysAquarismo.Domain.Dtos.Profiles
+namespace Api.SysAquarismo.Domain.Dtos.Profiles;
+
+public class UsuarioProfile : Profile
 {
-    public class UsuarioProfile : Profile
+    public UsuarioProfile() 
     {
-        public UsuarioProfile() 
-        {
-            CreateMap<CreateUsuarioDTO, Usuario>();
-        }
+        CreateMap<CreateUsuarioDTO, Usuario>();
     }
 }

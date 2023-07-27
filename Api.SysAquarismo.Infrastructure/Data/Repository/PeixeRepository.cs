@@ -1,5 +1,8 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models.Peixe;
+using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Infrastructure.Querys.PeixeQD;
+using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -22,9 +25,22 @@ public class PeixeRepository : IPeixeRepository
         throw new NotImplementedException();
     }
 
-    public Task InsertPeixe(Peixe peixe)
+    public async Task<int> InsertPeixe(Peixe peixe)
     {
-        throw new NotImplementedException();
+        try
+        {
+            string query = PeixeDQ.QueryCriaPeixe(peixe);
+
+            return _context.InsertAsync(query).Result;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
     }
 
     public Task UpdatePeixe(Peixe peixe)
