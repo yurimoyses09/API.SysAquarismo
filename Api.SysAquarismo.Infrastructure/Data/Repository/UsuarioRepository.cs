@@ -24,9 +24,9 @@ public class UsuarioRepository : IUsuarioRepository
 
             return _context.InsertAsync(query).Result;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            throw ex;
         }
         finally
         {

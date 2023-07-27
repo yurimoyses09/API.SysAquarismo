@@ -35,13 +35,13 @@ public class UsuarioController : ControllerBase
         {
             Usuario usuario = _mapper.Map<Usuario>(createUsuario);
             await _repository.InsertUsuario(usuario);
+
+            return Ok(new { data = createUsuario });
         }
         catch (Exception ex)
         {
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok();
     }
 
     /// <summary>
@@ -76,18 +76,16 @@ public class UsuarioController : ControllerBase
     /// <response code="400">Falha ao buscar usuario</response>
     /// <response code="404">Usuario não localizado</response>
     [HttpGet("valida_usuario/{nome_usuario}")]
-    public IActionResult ValidaUsuario(string nome_usuario)
+    public async Task<IActionResult> ValidaUsuario(string nome_usuario)
     {
         try
         {
-
+            return Ok();
         }
         catch (Exception ex)
         {
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok();
     }
 
     /// <summary>
@@ -98,17 +96,15 @@ public class UsuarioController : ControllerBase
     /// <response code="201">Senha atualizada com sucesso</response>
     /// <response code="400">Falha ao atualizar senha</response>
     [HttpPut("reset_senha")]
-    public IActionResult ResetSenha([FromBody] ResetSenhaUsuarioDTO resetSenhaUsuario) 
+    public async Task<IActionResult> ResetSenha([FromBody] ResetSenhaUsuarioDTO resetSenhaUsuario)
     {
         try
         {
-
+            return Ok();
         }
         catch (Exception ex)
         {
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok();
     }
 }

@@ -1,19 +1,23 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
+using Api.SysAquarismo.Domain.Interfaces;
+using Api.SysAquarismo.Domain.Models.Peixe;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.SysAquarismo.Application.Controllers;
 
-[Authorize]
 [ApiController]
 [Produces("application/json")]
 [Route("api/v1/peixe")]
 public class PeixeController : ControllerBase
 {
-    readonly ILogger _logger;
-    public PeixeController(ILogger logger)
+    private readonly IMapper _mapper;
+    private readonly IPeixeRepository _repository;
+    public PeixeController(IMapper mapper, IPeixeRepository repository)
     {
-        _logger = logger;
+        _mapper = mapper;
+        _repository = repository;
     }
 
     /// <summary>
@@ -25,19 +29,16 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpGet("nome_peixe")]
-    public IActionResult ObtemPeixePorNome(string nome_peixe)
+    public async Task<IActionResult> ObtemPeixePorNome(string nome_peixe)
     {
         try
         {
-
+            return Ok(new { data = "" });
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok(new { data = "" });
     }
 
     /// <summary>
@@ -48,19 +49,19 @@ public class PeixeController : ControllerBase
     /// <response code="200">Sucesso ao cadastrar peixe</response>
     /// <response code="400">Falha ao cadastrar dados do peixe</response>
     [HttpPost("cadastra")]
-    public IActionResult CadastraPeixe([FromBody] CreatePeixeDTO createPeixe)
+    public async Task<IActionResult> CadastraPeixe([FromBody] CreatePeixeDTO createPeixe)
     {
         try
         {
+            Peixe peixe = _mapper.Map<Peixe>(createPeixe);
+            await _repository.InsertPeixe(peixe);
 
+            return Ok(new { data = createPeixe });
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok(new { data = "" });
     }
 
     /// <summary>
@@ -72,19 +73,16 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao deletar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpDelete("deleta/{nome_peixe}")]
-    public IActionResult DeletaPeixePorNome(string nome_peixe)
+    public async Task<IActionResult> DeletaPeixePorNome(string nome_peixe)
     {
         try
         {
-
+            return Ok(new { data = "" });
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok(new { data = "" });
     }
 
     /// <summary>
@@ -96,18 +94,15 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpPut("atualiza_peixe")]
-    public IActionResult AtualizaPeixe([FromBody] UpdatePeixeDTO updatePeixeDTO)
+    public async Task<IActionResult> AtualizaPeixe([FromBody] UpdatePeixeDTO updatePeixeDTO)
     {
         try
         {
-
+            return Ok(new { data = "" });
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex, ex.Message.ToString());
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok(new { data = "" });
     }
 }
