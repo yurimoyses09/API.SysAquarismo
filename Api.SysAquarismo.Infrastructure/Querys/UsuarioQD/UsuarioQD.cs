@@ -5,6 +5,26 @@ namespace Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 
 public static class UsuarioQD
 {
+    internal static string BuscaUsuarioLogin(Usuario usuario)
+    {
+        return $@"
+            SELECT 
+                 [ID_USUARIO]
+                ,[NOME]
+                ,[IDADE]
+                ,[TELEFONE]
+                ,[ID_SEXO]
+                ,[PAIS]
+                ,[NOME_LOGIN]
+                ,[SENHA]
+                ,[SENHA_COFIRMADA]
+                ,[ID_PEIXE]
+            FROM [dbo].[TB_USUARIO] 
+            WHERE 
+                [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
+                [SENHA] = '{usuario.Ds_Senha}'";
+    }
+
     internal static string QueryCriaUsuario(Usuario usuario)
     {
         return $@"
