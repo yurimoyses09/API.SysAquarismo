@@ -36,7 +36,20 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task<dynamic> LoginUsuario(Usuario usuario)
     {
-        throw new NotImplementedException();
+        try
+        {
+            string query = UsuarioQD.BuscaUsuarioLogin(usuario);
+
+            return _context.SelectAsync(query).Result;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
     }
 
     public Task ResetSenha(Usuario usuario)

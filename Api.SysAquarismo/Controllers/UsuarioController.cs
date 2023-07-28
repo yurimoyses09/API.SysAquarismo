@@ -58,14 +58,15 @@ public class UsuarioController : ControllerBase
         try
         {
             Usuario usuario = _mapper.Map<Usuario>(loginUsuario);
-            await _repository.LoginUsuario(usuario);
+            List<dynamic> usuarioValido = await _repository.LoginUsuario(usuario);
+
+            if (usuarioValido != null && usuarioValido.Count > 0) return Ok();
+            else return NotFound(new { data = "Usuario não cadastrado no sistema" });
         }
         catch (Exception ex)
         {
             return BadRequest(new { data = ex.Message });
         }
-
-        return Ok();
     }
 
     /// <summary>
