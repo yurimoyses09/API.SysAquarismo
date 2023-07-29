@@ -11,6 +11,25 @@ public class UsuarioRepository : IUsuarioRepository
     {
         _context = context;
     }
+
+    public async Task<dynamic> BuscaMesmoLogin(Usuario usuario)
+    {
+        try
+        {
+            string query = UsuarioQD.BuscaExistenciaLogin(usuario);
+
+            return _context.SelectAsync(query).Result;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
+    }
+
     public Task GetUsuario(string nm_usuario)
     {
         throw new NotImplementedException();
@@ -24,9 +43,9 @@ public class UsuarioRepository : IUsuarioRepository
 
             return _context.InsertAsync(query).Result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw;
         }
         finally
         {

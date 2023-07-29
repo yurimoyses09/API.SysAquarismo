@@ -24,7 +24,7 @@ public class UsuarioController : ControllerBase
     /// <summary>
     /// Cadastra usuario no sistema
     /// </summary>
-    /// <param name="createUsuario"></param>
+    /// <param name="createUsuario">Dados usados para realizar cadastro no sistema</param>
     /// <returns></returns>
     /// <response code="201">Usuario cadastrado com sucesos</response>
     /// <response code="400">Falha ao cadastrar usuario</response>
@@ -34,6 +34,11 @@ public class UsuarioController : ControllerBase
         try
         {
             Usuario usuario = _mapper.Map<Usuario>(createUsuario);
+
+            List<dynamic> validacao = _repository.BuscaMesmoLogin(usuario).Result;
+            if (validacao.Count > 0)
+                return BadRequest(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe na base!" });
+
             await _repository.InsertUsuario(usuario);
 
             return Ok(new { data = createUsuario });
@@ -47,8 +52,8 @@ public class UsuarioController : ControllerBase
     /// <summary>
     /// Realiza login no sistema
     /// </summary>
-    /// <param name="loginUsuario"></param>
-    /// <returns></returns>
+    /// <param name="loginUsuario">Dados usados para validar login no sistema</param>
+    /// <returns>IActionResult</returns>
     /// <response code="201">Usuario cadastrado com sucesos</response>
     /// <response code="400">Falha ao cadastrar usuario</response>
     /// <response code="404">Usuario não cadastrado no sistema</response>
@@ -72,7 +77,8 @@ public class UsuarioController : ControllerBase
     /// <summary>
     /// Valida existencia de usuario para redefinir senha
     /// </summary>
-    /// <returns></returns>
+    /// <param name="nome_usuario">Nome do usuario para realizar validação no sistema</param>
+    /// <returns>IActionResult</returns>
     /// <response code="201">Usuario existe no sistema</response>
     /// <response code="400">Falha ao buscar usuario</response>
     /// <response code="404">Usuario não localizado</response>
