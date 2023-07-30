@@ -73,15 +73,17 @@ public static class UsuarioQD
                    ,[PAIS]
                    ,[NOME_LOGIN]
                    ,[SENHA]
-                   ,[SENHA_COFIRMADA])
+                   ,[SENHA_COFIRMADA]
+                   ,[EMAIL])
              VALUES
                    ('{usuario.Nome_Usuario}'
                    ,{usuario.Idade}
                    ,'{usuario.Ds_Telefone}'
-                   ,{(int)Enum.Parse(typeof(Enums.Status_Saude), usuario.Sexo)}
+                   ,{(int)Enum.Parse(typeof(Enums.Sexo), usuario.Sexo)}
                    ,'{usuario.Ds_Pais}'
                    ,'{usuario.Ds_Nome_Usuario_Login}'
                    ,'{usuario.Ds_Senha}'
-                   ,'{usuario.Ds_Senha}')";
+                   ,'{usuario.Ds_Senha}'
+                   ,'{usuario.Ds_Email}')";
     }
 }
