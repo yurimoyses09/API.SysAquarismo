@@ -114,4 +114,26 @@ public class UsuarioController : ControllerBase
             return BadRequest(new { data = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Busca todos os dados do usuario e os peixes relacionados a ele
+    /// </summary>
+    /// <param name="nome_usuario"></param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Dados encontrados com sucesso</response>
+    /// <response code="400">Falha buscar dados</response>
+    [HttpGet]
+    public async Task<IActionResult> BuscaDadosUsuario(string nome_usuario)
+    {
+        try
+        {
+            List<dynamic> dados = await _repository.BuscaDadosUsuario(nome_usuario);
+
+            return Ok(new { data = dados });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { data = ex.Message });
+        }
+    }
 }

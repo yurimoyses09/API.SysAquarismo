@@ -9,6 +9,25 @@ namespace Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 public static class UsuarioQD
 {
     /// <summary>
+    /// Busca todos os dados do usuario em base dados
+    /// </summary>
+    /// <param name="nome_usuario"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    internal static string BuscaDadosUsuario(string nome_usuario)
+    {
+        return @$"
+            SELECT 
+            	*
+            FROM
+            	[dbo].[TB_USUARIO] U
+            LEFT JOIN [dbo].[TB_PEIXE] P ON
+            P.ID_PEIXE = U.ID_PEIXE
+            
+            WHERE U.[NOME_LOGIN] = '{nome_usuario}'";
+    }
+
+    /// <summary>
     /// Busca nome de login na base para evitar usuarios com o mesmo login
     /// </summary>
     /// <param name="usuario"></param>
