@@ -12,6 +12,24 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
+    public async Task<List<dynamic>> BuscaDadosUsuario(string nome_usuario)
+    {
+        try
+        {
+            string query = UsuarioQD.BuscaDadosUsuario(nome_usuario);
+
+            return (List<dynamic>) _context.SelectAsync(nome_usuario).Result;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
+    }
+
     public async Task<dynamic> BuscaMesmoLogin(Usuario usuario)
     {
         try
