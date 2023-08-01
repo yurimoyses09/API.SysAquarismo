@@ -122,12 +122,12 @@ public class UsuarioController : ControllerBase
     /// <returns>IActionResult</returns>
     /// <response code="201">Dados encontrados com sucesso</response>
     /// <response code="400">Falha buscar dados</response>
-    [HttpGet]
+    [HttpGet("{nome_usuario}")]
     public async Task<IActionResult> BuscaDadosUsuario(string nome_usuario)
     {
         try
         {
-            List<dynamic> dados = await _repository.BuscaDadosUsuario(nome_usuario);
+            var dados = await _repository.BuscaDadosUsuario(nome_usuario);
 
             return Ok(new { data = dados });
         }

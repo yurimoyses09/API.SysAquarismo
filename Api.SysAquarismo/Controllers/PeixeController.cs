@@ -1,6 +1,6 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
 using Api.SysAquarismo.Domain.Interfaces;
-using Api.SysAquarismo.Domain.Models.Peixe;
+using Api.SysAquarismo.Domain.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

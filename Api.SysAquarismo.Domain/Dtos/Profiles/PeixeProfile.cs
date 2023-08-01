@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
-using Api.SysAquarismo.Domain.Models.Peixe;
+using Api.SysAquarismo.Domain.Models;
 using AutoMapper;
 
 namespace Api.SysAquarismo.Domain.Dtos.Profiles;

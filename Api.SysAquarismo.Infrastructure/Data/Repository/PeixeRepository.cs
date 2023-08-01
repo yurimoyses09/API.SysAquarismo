@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
-using Api.SysAquarismo.Domain.Models.Peixe;
+using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Domain.Models.Usuario;
 using Api.SysAquarismo.Infrastructure.Querys.PeixeQD;
 using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;

@@ -17,14 +17,27 @@ public static class UsuarioQD
     internal static string BuscaDadosUsuario(string nome_usuario)
     {
         return @$"
-            SELECT 
-            	*
-            FROM
-            	[dbo].[TB_USUARIO] U
-            LEFT JOIN [dbo].[TB_PEIXE] P ON
-            P.ID_PEIXE = U.ID_PEIXE
-            
-            WHERE U.[NOME_LOGIN] = '{nome_usuario}'";
+                SELECT 
+                	Usuario.ID_USUARIO AS Id_Usuario,
+                	Usuario.NOME AS Nome_Login,
+                	Usuario.IDADE AS Idade,
+                	Usuario.TELEFONE AS Tefelone,
+                	Usuario.NOME_LOGIN AS Ds_Nome_Usuario_Login,
+                
+                	Peixes.ID_PEIXE AS Id_Peixe,
+                	Peixes.NOME AS Ds_Nome_Peixe,
+                	Peixes.ESPECIE AS Ds_Nome_Especie,
+                	Peixes.TAMANHO AS Vl_Tamanho, 
+                	Peixes.DT_MORTE AS Ds_Data_Morte,
+                	Peixes.IMG_PEIXE AS Ds_Imagem,
+                	Peixes.DS_DOENCA AS Ds_doenca,
+                	Peixes.DT_AQUISICAO AS Ds_Data_Aquisicao
+                FROM
+                	[dbo].[TB_USUARIO] Usuario
+                LEFT JOIN [dbo].[TB_PEIXE] Peixes ON
+                Peixes.ID_USUARIO = Usuario.ID_USUARIO
+                
+                WHERE Usuario.[NOME_LOGIN] = '{nome_usuario}'";
     }
 
     /// <summary>
@@ -69,7 +82,6 @@ public static class UsuarioQD
                 ,[NOME_LOGIN]
                 ,[SENHA]
                 ,[SENHA_COFIRMADA]
-                ,[ID_PEIXE]
             FROM [dbo].[TB_USUARIO] 
             WHERE 
                 [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
