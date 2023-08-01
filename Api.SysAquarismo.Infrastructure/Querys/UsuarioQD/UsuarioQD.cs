@@ -31,11 +31,15 @@ public static class UsuarioQD
                 	Peixes.DT_MORTE AS Ds_Data_Morte,
                 	Peixes.IMG_PEIXE AS Ds_Imagem,
                 	Peixes.DS_DOENCA AS Ds_doenca,
-                	Peixes.DT_AQUISICAO AS Ds_Data_Aquisicao
+                	Peixes.DT_AQUISICAO AS Ds_Data_Aquisicao,
+                    Peixes.ID_STATUS_SAUDE AS Id_status_Saude,
+                    Peixes.ID_SEXO AS sexo
                 FROM
                 	[dbo].[TB_USUARIO] Usuario
                 LEFT JOIN [dbo].[TB_PEIXE] Peixes ON
                 Peixes.ID_USUARIO = Usuario.ID_USUARIO
+                LEFT JOIN [dbo].[TB_STATUS_SAUDE] Saude ON
+                Peixes.ID_STATUS_SAUDE = Saude.ID_STATUS_SAUDE
                 
                 WHERE Usuario.[NOME_LOGIN] = '{nome_usuario}'";
     }

@@ -1,28 +1,39 @@
-﻿using Api.SysAquarismo.Domain.Models;
+﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
+using System.Text.Json.Serialization;
 
 namespace Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
 
 public class ReadUsuarioDTO
 {
-    public int Id { get; set; }
+    [JsonPropertyName("id_usuario")]
+    public int Id_Usuario { get; set; }
+    [JsonPropertyName("nome_usuario")]
     public string Nome_Usuario { get; set; }
+    [JsonPropertyName("idade")]
     public int Idade { get; set; }
+    [JsonPropertyName("tefelone")]
     public string Ds_Telefone { get; set; }
+    [JsonPropertyName("email")]
     public string Ds_Email { get; set; }
+    [JsonPropertyName("nome_login")]
     public string Ds_Nome_Usuario_Login { get; set; }
+    [JsonPropertyName("senha_usuario")]
     public string Ds_Senha { get; set; }
+    [JsonPropertyName("sexo")]
     public string Sexo { get; set; }
+    [JsonPropertyName("pais")]
     public string Ds_Pais { get; set; }
-    public IEnumerable<Peixe> Peixes { get; set; }
+    [JsonPropertyName("peixes")]
+    public List<ReadPeixeDTO> Peixes { get; set; }
 
     public ReadUsuarioDTO()
     {
         
     }
 
-    public ReadUsuarioDTO(int id, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, IEnumerable<Peixe> peixes)
+    public ReadUsuarioDTO(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<ReadPeixeDTO> peixes)
     {
-        Id = id;
+        Id_Usuario = id_Usuario;
         Nome_Usuario = nome_Usuario;
         Idade = idade;
         Ds_Telefone = ds_Telefone;

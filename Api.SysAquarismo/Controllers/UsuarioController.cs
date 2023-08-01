@@ -127,7 +127,9 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var dados = await _repository.BuscaDadosUsuario(nome_usuario);
+            var result = (List<Usuario>) await _repository.BuscaDadosUsuario(nome_usuario);
+
+            List<ReadUsuarioDTO> dados = _mapper.Map<List<ReadUsuarioDTO>>(result);
 
             return Ok(new { data = dados });
         }
