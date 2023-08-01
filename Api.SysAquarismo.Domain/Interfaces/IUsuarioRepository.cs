@@ -1,4 +1,5 @@
-﻿using Api.SysAquarismo.Domain.Models.Usuario;
+﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
+using Api.SysAquarismo.Domain.Models.Usuario;
 
 namespace Api.SysAquarismo.Domain.Interfaces;
 
@@ -9,5 +10,5 @@ public interface IUsuarioRepository
     Task GetUsuario(string nm_usuario);
     Task ResetSenha(Usuario usuario);
     Task<dynamic> BuscaMesmoLogin(Usuario usuario);
-    Task<List<dynamic>> BuscaDadosUsuario(string nome_usuario);
+    Task<dynamic> BuscaDadosUsuario(string nome_usuario);
 }

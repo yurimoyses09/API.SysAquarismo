@@ -1,4 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Models.Peixe;
+﻿using Api.SysAquarismo.Domain.Models;
 
 namespace Api.SysAquarismo.Domain.Interfaces;
 

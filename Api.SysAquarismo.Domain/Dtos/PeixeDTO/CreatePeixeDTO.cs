@@ -47,7 +47,10 @@ public class CreatePeixeDTO
     [JsonPropertyName("ds_imagem")]
     public string Ds_Imagem { get; set; }
 
-    public CreatePeixeDTO(string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, double vl_Tamanho, string ds_status_Saude, DateTime ds_Data_Morte, string ds_doenca, DateTime ds_Data_Aquisicao, string ds_Imagem)
+    [JsonPropertyName("id_usuario")]
+    public int Id_Usuario { get; set; }
+
+    public CreatePeixeDTO(string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, double vl_Tamanho, string ds_status_Saude, DateTime ds_Data_Morte, string ds_doenca, DateTime ds_Data_Aquisicao, string ds_Imagem, int id_Usuario)
     {
         Ds_Nome_Peixe = ds_Nome_Peixe;
         Ds_Nome_Especie = ds_Nome_Especie;
@@ -60,5 +63,6 @@ public class CreatePeixeDTO
         Ds_doenca = ds_doenca;
         Ds_Data_Aquisicao = ds_Data_Aquisicao;
         Ds_Imagem = ds_Imagem;
+        Id_Usuario = id_Usuario;
     }
 }

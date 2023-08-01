@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Models.Peixe;
+using Api.SysAquarismo.Domain.Models;
 
 namespace Api.SysAquarismo.Infrastructure.Querys.PeixeQD
 {

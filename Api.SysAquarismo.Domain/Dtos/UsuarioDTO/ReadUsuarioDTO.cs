@@ -1,26 +1,28 @@
-﻿namespace Api.SysAquarismo.Domain.Models.Usuario;
+﻿using Api.SysAquarismo.Domain.Models;
 
-public class Usuario
+namespace Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
+
+public class ReadUsuarioDTO
 {
-    public int Id_Usuario { get; set; }
+    public int Id { get; set; }
     public string Nome_Usuario { get; set; }
     public int Idade { get; set; }
     public string Ds_Telefone { get; set; }
-    public string  Ds_Email { get; set; }
+    public string Ds_Email { get; set; }
     public string Ds_Nome_Usuario_Login { get; set; }
     public string Ds_Senha { get; set; }
     public string Sexo { get; set; }
     public string Ds_Pais { get; set; }
-    public List<Peixe> Peixes { get; set; }
+    public IEnumerable<Peixe> Peixes { get; set; }
 
-    public Usuario()
+    public ReadUsuarioDTO()
     {
-    
+        
     }
 
-    public Usuario(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<Peixe> peixes)
+    public ReadUsuarioDTO(int id, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, IEnumerable<Peixe> peixes)
     {
-        Id_Usuario = id_Usuario;
+        Id = id;
         Nome_Usuario = nome_Usuario;
         Idade = idade;
         Ds_Telefone = ds_Telefone;

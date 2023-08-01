@@ -1,6 +1,9 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
+using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Domain.Models.Usuario;
 using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -12,13 +15,32 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
-    public async Task<List<dynamic>> BuscaDadosUsuario(string nome_usuario)
+    public async Task<dynamic> BuscaDadosUsuario(string nome_usuario)
     {
         try
         {
             string query = UsuarioQD.BuscaDadosUsuario(nome_usuario);
+            using (var db = new SqlConnection(Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User)))
+            {
+                var lookup = new Dictionary<int, Usuario>();
+                db.Query<Usuario, Peixe, Usuario>(
+                    query,
+                    (usuario, peixe) =>
+                    {
+                        if (!lookup.TryGetValue(usuario.Id_Usuario, out Usuario usuarioEntry))
+                        {
+                            usuarioEntry = usuario;
+                            usuarioEntry.Peixes = new List<Peixe>();
+                            lookup.Add(usuarioEntry.Id_Usuario, usuarioEntry);
+                        }
+                        usuarioEntry.Peixes.Add(peixe);
+                        return usuarioEntry;
+                    },
+                    splitOn: "Id_Peixe"
+                );
 
-            return (List<dynamic>) _context.SelectAsync(nome_usuario).Result;
+                return lookup.Values.ToList();
+            }
         }
         catch (Exception)
         {

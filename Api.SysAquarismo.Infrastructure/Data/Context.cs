@@ -6,15 +6,14 @@ namespace Api.SysAquarismo.Infrastructure.Data;
 
 public class Context : IContext
 {
-    private readonly SqlConnection _connection;
+    public readonly SqlConnection _connection;
+    private readonly string connectionString = Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User);
 
     public Context(SqlConnection? connection = null)
     {
         try
         {
-            var connectionString = Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User);
             connection = new SqlConnection(connectionString);
-            
             connection.Open();
 
             _connection = connection;
