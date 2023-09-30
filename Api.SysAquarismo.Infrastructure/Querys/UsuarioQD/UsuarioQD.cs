@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Domain.Models;
 
 namespace Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 
@@ -17,31 +17,14 @@ public static class UsuarioQD
     internal static string BuscaDadosUsuario(string nome_usuario)
     {
         return @$"
-                SELECT 
-                	Usuario.ID_USUARIO AS Id_Usuario,
-                	Usuario.NOME AS Nome_Login,
-                	Usuario.IDADE AS Idade,
-                	Usuario.TELEFONE AS Tefelone,
-                	Usuario.NOME_LOGIN AS Ds_Nome_Usuario_Login,
-                
-                	Peixes.ID_PEIXE AS Id_Peixe,
-                	Peixes.NOME AS Ds_Nome_Peixe,
-                	Peixes.ESPECIE AS Ds_Nome_Especie,
-                	Peixes.TAMANHO AS Vl_Tamanho, 
-                	Peixes.DT_MORTE AS Ds_Data_Morte,
-                	Peixes.IMG_PEIXE AS Ds_Imagem,
-                	Peixes.DS_DOENCA AS Ds_doenca,
-                	Peixes.DT_AQUISICAO AS Ds_Data_Aquisicao,
-                    Peixes.ID_STATUS_SAUDE AS Id_status_Saude,
-                    Peixes.ID_SEXO AS sexo
-                FROM
-                	[dbo].[TB_USUARIO] Usuario
-                LEFT JOIN [dbo].[TB_PEIXE] Peixes ON
-                Peixes.ID_USUARIO = Usuario.ID_USUARIO
-                LEFT JOIN [dbo].[TB_STATUS_SAUDE] Saude ON
-                Peixes.ID_STATUS_SAUDE = Saude.ID_STATUS_SAUDE
-                
-                WHERE Usuario.[NOME_LOGIN] = '{nome_usuario}'";
+            SELECT TOP (1) 
+                 [ID_USUARIO] AS Id_Usuario
+                ,[NOME] AS Nome_Usuario
+                ,[IDADE] AS Idade
+                ,[TELEFONE] AS Ds_Telefone
+                ,[NOME_LOGIN] AS Ds_Nome_Usuario_Login
+            FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_USUARIO]
+            WHERE [NOME_LOGIN] = '{nome_usuario}'";
     }
 
     /// <summary>

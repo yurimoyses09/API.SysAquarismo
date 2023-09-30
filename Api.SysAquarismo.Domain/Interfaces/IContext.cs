@@ -2,7 +2,8 @@
 
 public interface IContext
 {
-    Task<IEnumerable<dynamic>> SelectAsync(string query);
+    Task<IEnumerable<Object>> SelectAsync(string query);
+    Task<IEnumerable<Object>> SelectAsync<Object>(string query);
     Task<int> InsertAsync(string query);
     Task<int> DeleteAsync(string query);
     Task<int> UpdateAsync(string query);

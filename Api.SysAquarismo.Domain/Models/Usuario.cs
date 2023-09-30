@@ -1,4 +1,6 @@
-﻿namespace Api.SysAquarismo.Domain.Models.Usuario;
+﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
+
+namespace Api.SysAquarismo.Domain.Models;
 
 public class Usuario
 {
@@ -6,7 +8,7 @@ public class Usuario
     public string Nome_Usuario { get; set; }
     public int Idade { get; set; }
     public string Ds_Telefone { get; set; }
-    public string  Ds_Email { get; set; }
+    public string Ds_Email { get; set; }
     public string Ds_Nome_Usuario_Login { get; set; }
     public string Ds_Senha { get; set; }
     public string Sexo { get; set; }
@@ -15,7 +17,7 @@ public class Usuario
 
     public Usuario()
     {
-    
+
     }
 
     public Usuario(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<Peixe> peixes)
@@ -30,5 +32,20 @@ public class Usuario
         Sexo = sexo;
         Ds_Pais = ds_Pais;
         Peixes = peixes;
+    }
+
+    public Usuario(IEnumerable<Peixe> peixe, Usuario usuario)
+    {
+        Id_Usuario = usuario.Id_Usuario;
+        Nome_Usuario = usuario.Nome_Usuario.ToString();
+        Ds_Telefone = usuario.Ds_Telefone.ToString();
+        Idade = usuario.Idade;
+        Ds_Nome_Usuario_Login = usuario.Ds_Nome_Usuario_Login;
+        Peixes = new List<Peixe>();
+
+        foreach (Peixe pe in peixe)
+        {
+            Peixes.Add(pe);
+        } 
     }
 }

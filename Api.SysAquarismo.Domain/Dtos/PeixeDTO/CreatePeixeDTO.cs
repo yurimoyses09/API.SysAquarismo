@@ -8,7 +8,7 @@ public class CreatePeixeDTO
 {
     [JsonPropertyName("nome_peixe")]
     [Required(ErrorMessage = "O atributo de nome deve ser preenchido")]
-    [MaxLength(20, ErrorMessage = "O tamanho do nome nao é valido <20")]
+    [MaxLength(20, ErrorMessage = "O tamanho do nome nao é valido < 20")]
     public string Ds_Nome_Peixe { get; set; }
 
     [JsonPropertyName("nome_especie")]

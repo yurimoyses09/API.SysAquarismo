@@ -1,9 +1,11 @@
-﻿using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
+using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
-using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Infrastructure.Querys.PeixeQD;
 using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -19,28 +21,17 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            string query = UsuarioQD.BuscaDadosUsuario(nome_usuario);
-            using (var db = new SqlConnection(Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User)))
-            {
-                var lookup = new Dictionary<int, Usuario>();
-                db.Query<Usuario, Peixe, Usuario>(
-                    query,
-                    (usuario, peixe) =>
-                    {
-                        if (!lookup.TryGetValue(usuario.Id_Usuario, out Usuario usuarioEntry))
-                        {
-                            usuarioEntry = usuario;
-                            usuarioEntry.Peixes = new List<Peixe>();
-                            lookup.Add(usuarioEntry.Id_Usuario, usuarioEntry);
-                        }
-                        usuarioEntry.Peixes.Add(peixe);
-                        return usuarioEntry;
-                    },
-                    splitOn: "Id_Peixe"
-                );
+            string queryUsuario = UsuarioQD.BuscaDadosUsuario(nome_usuario);
+            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario).Result;
 
-                return lookup.Values.ToList();
-            }
+            int id_usuario = dataUser.FirstOrDefault().Id_Usuario;
+
+            string queryPeixe = PeixeDQ.BuscaDadosPeixe(id_usuario);
+            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe).Result;
+
+            var dados = new Usuario(peixes, dataUser.FirstOrDefault());
+
+            return dados;
         }
         catch (Exception)
         {

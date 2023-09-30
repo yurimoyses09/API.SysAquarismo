@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
-using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Domain.Models;
 using AutoMapper;
 
 namespace Api.SysAquarismo.Domain.Dtos.Profiles;

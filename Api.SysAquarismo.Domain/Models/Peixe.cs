@@ -1,4 +1,6 @@
-﻿namespace Api.SysAquarismo.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Api.SysAquarismo.Domain.Models;
 
 public class Peixe
 {
@@ -12,7 +14,6 @@ public class Peixe
     public int Vl_Tamanho { get; set; }
     public DateTime Ds_Data_Morte { get; set; }
     public string Ds_Imagem { get; set; }
-    public string Id_status_Saude { get; set; }
     public string Ds_status_Saude { get; set; }
     public string Ds_doenca { get; set; }
     public DateTime Ds_Data_Aquisicao { get; set; }
@@ -21,10 +22,9 @@ public class Peixe
     {
 
     }
-
-    public Peixe(int id_Peixe, int id_Usuario, string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, int vl_Tamanho, DateTime ds_Data_Morte, string ds_Imagem, string id_status_Saude, string ds_status_Saude, string ds_doenca, DateTime ds_Data_Aquisicao)
+    public Peixe(int id, int id_Usuario, string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, int vl_Tamanho, DateTime ds_Data_Morte, string ds_Imagem, string ds_status_Saude, string ds_doenca, DateTime ds_Data_Aquisicao)
     {
-        Id_Peixe = id_Peixe;
+        Id_Peixe = id;
         Id_Usuario = id_Usuario;
         Ds_Nome_Peixe = ds_Nome_Peixe;
         Ds_Nome_Especie = ds_Nome_Especie;
@@ -34,7 +34,6 @@ public class Peixe
         Vl_Tamanho = vl_Tamanho;
         Ds_Data_Morte = ds_Data_Morte;
         Ds_Imagem = ds_Imagem;
-        Id_status_Saude = id_status_Saude;
         Ds_status_Saude = ds_status_Saude;
         Ds_doenca = ds_doenca;
         Ds_Data_Aquisicao = ds_Data_Aquisicao;
