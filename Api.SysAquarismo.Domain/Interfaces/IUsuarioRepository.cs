@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
-using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Domain.Models;
 
 namespace Api.SysAquarismo.Domain.Interfaces;
 

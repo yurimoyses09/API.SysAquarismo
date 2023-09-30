@@ -24,7 +24,7 @@ public class Context : IContext
         }
     }
 
-    public async Task<IEnumerable<dynamic>> SelectAsync(string query) => await _connection.QueryAsync<dynamic>(query);
+    public async Task<IEnumerable<Object>> SelectAsync(string query) => await _connection.QueryAsync<Object>(query);
 
     public async Task<int> InsertAsync(string query) => await _connection.ExecuteAsync(query);
 
@@ -44,4 +44,6 @@ public class Context : IContext
             throw;
         }
     }
+
+    public async Task<IEnumerable<Object>> SelectAsync<Object>(string query) => await _connection.QueryAsync<Object>(query);
 }

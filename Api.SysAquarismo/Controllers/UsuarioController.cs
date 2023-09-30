@@ -1,6 +1,6 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
 using Api.SysAquarismo.Domain.Interfaces;
-using Api.SysAquarismo.Domain.Models.Usuario;
+using Api.SysAquarismo.Domain.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -127,9 +127,9 @@ public class UsuarioController : ControllerBase
     {
         try
         {
-            var result = (List<Usuario>) await _repository.BuscaDadosUsuario(nome_usuario);
+            var result = await _repository.BuscaDadosUsuario(nome_usuario);
 
-            List<ReadUsuarioDTO> dados = _mapper.Map<List<ReadUsuarioDTO>>(result);
+            var dados = _mapper.Map<ReadUsuarioDTO>(result);
 
             return Ok(new { data = dados });
         }
