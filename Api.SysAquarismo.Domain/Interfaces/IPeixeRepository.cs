@@ -8,4 +8,5 @@ public interface IPeixeRepository
     Task DeletePeixe(Peixe peixe);
     Task GetPeixe();
     Task UpdatePeixe(Peixe peixe);
+    Task<dynamic> GetPeixePorId(int id);
 }

@@ -24,20 +24,50 @@ public class Context : IContext
         }
     }
 
+    /// <summary>
+    /// Realiza consultas de select no banco de dados
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<Object>> SelectAsync(string query) => await _connection.QueryAsync<Object>(query);
 
+    /// <summary>
+    /// Realiza consultas de select no banco de dados
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<Object>> SelectAsync<Object>(string query) => await _connection.QueryAsync<Object>(query);
+
+    /// <summary>
+    /// Realiza insert de dados no banco de dados
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     public async Task<int> InsertAsync(string query) => await _connection.ExecuteAsync(query);
 
+    /// <summary>
+    /// Realiza o delete de dados do banco de dados
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     public async Task<int> DeleteAsync(string query) => await _connection.ExecuteAsync(query);
     
+    /// <summary>
+    /// Realiza o update de dados no banco de dados
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
     public async Task<int> UpdateAsync(string query) => await _connection.ExecuteAsync(query);
 
+    /// <summary>
+    /// Fecha conexão com o bando de dados
+    /// </summary>
+    /// <returns></returns>
     public async Task CloseConnection()
     {
         try
         {
-            if (_connection.State == System.Data.ConnectionState.Closed)
-                await _connection.CloseAsync();
+            if (_connection.State == System.Data.ConnectionState.Closed) await _connection.CloseAsync();
         }
         catch (Exception)
         {
@@ -45,5 +75,4 @@ public class Context : IContext
         }
     }
 
-    public async Task<IEnumerable<Object>> SelectAsync<Object>(string query) => await _connection.QueryAsync<Object>(query);
 }

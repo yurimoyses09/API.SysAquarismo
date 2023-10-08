@@ -37,7 +37,7 @@ public class UsuarioController : ControllerBase
 
             List<dynamic> validacao = _repository.BuscaMesmoLogin(usuario).Result;
             if (validacao.Count > 0)
-                return BadRequest(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe na base!" });
+                return BadRequest(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!" });
 
             await _repository.InsertUsuario(usuario);
 
