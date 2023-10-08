@@ -1,6 +1,6 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
-using Api.SysAquarismo.Infrastructure.Querys.PeixeQD;
+using Api.SysAquarismo.Infrastructure.Querys;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -23,6 +23,25 @@ public class PeixeRepository : IPeixeRepository
         throw new NotImplementedException();
     }
 
+    public async Task<dynamic> GetPeixePorId(int id)
+    {
+        try
+        {
+            string query = PeixeDQ.BuscaDadosPeixe(id);
+
+            IEnumerable<Peixe> dados = _context.SelectAsync<Peixe>(query).Result;
+
+            return dados;
+        }
+        catch (Exception)
+        {
+            throw;
+        }finally
+        {
+            await _context.CloseConnection();
+        }
+    }
+
     public async Task<int> InsertPeixe(Peixe peixe)
     {
         try
@@ -31,9 +50,9 @@ public class PeixeRepository : IPeixeRepository
 
             return _context.InsertAsync(query).Result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw ex;
+            throw;
         }
         finally
         {

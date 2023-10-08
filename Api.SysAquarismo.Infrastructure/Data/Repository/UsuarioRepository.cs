@@ -1,11 +1,6 @@
-﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
-using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
-using Api.SysAquarismo.Infrastructure.Querys.PeixeQD;
-using Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
-using Dapper;
-using Microsoft.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Api.SysAquarismo.Infrastructure.Querys;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
@@ -26,7 +21,7 @@ public class UsuarioRepository : IUsuarioRepository
 
             int id_usuario = dataUser.FirstOrDefault().Id_Usuario;
 
-            string queryPeixe = PeixeDQ.BuscaDadosPeixe(id_usuario);
+            string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin(id_usuario);
             IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe).Result;
 
             var dados = new Usuario(peixes, dataUser.FirstOrDefault());

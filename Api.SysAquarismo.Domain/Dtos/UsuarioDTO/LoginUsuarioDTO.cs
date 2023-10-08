@@ -21,4 +21,9 @@ public class LoginUsuarioDTO
         Ds_Nome_Usuario_Login = ds_Nome_Usuario_Login;
         Ds_Senha = ds_Senha;
     }
+
+    public LoginUsuarioDTO()
+    {
+        
+    }
 }

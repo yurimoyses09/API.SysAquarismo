@@ -1,7 +1,7 @@
 ﻿using Api.SysAquarismo.Domain.Enum;
 using Api.SysAquarismo.Domain.Models;
 
-namespace Api.SysAquarismo.Infrastructure.Querys.UsuarioQD;
+namespace Api.SysAquarismo.Infrastructure.Querys;
 
 /// <summary>
 /// Centralizadora de consultas na base de dados relacionada ao usuario
@@ -48,7 +48,8 @@ public static class UsuarioQD
                 ,[ID_PEIXE]
             FROM [dbo].[TB_USUARIO] 
             WHERE 
-                [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}'";
+                [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
+                [USUARIO_ATIVO] = 1";
     }
 
     /// <summary>
@@ -72,7 +73,8 @@ public static class UsuarioQD
             FROM [dbo].[TB_USUARIO] 
             WHERE 
                 [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
-                [SENHA] = '{usuario.Ds_Senha}'";
+                [SENHA] = '{usuario.Ds_Senha}' AND
+                [USUARIO_ATIVO] = 1";
     }
 
     /// <summary>
@@ -92,7 +94,9 @@ public static class UsuarioQD
                    ,[NOME_LOGIN]
                    ,[SENHA]
                    ,[SENHA_COFIRMADA]
-                   ,[EMAIL])
+                   ,[EMAIL]
+                   ,[USUARIO_ATIVO]
+                   ,[DT_INCLUSAO])
              VALUES
                    ('{usuario.Nome_Usuario}'
                    ,{usuario.Idade}
@@ -102,6 +106,8 @@ public static class UsuarioQD
                    ,'{usuario.Ds_Nome_Usuario_Login}'
                    ,'{usuario.Ds_Senha}'
                    ,'{usuario.Ds_Senha}'
-                   ,'{usuario.Ds_Email}')";
+                   ,'{usuario.Ds_Email}'
+                   ,1
+                   ,{DateTime.Now})";
     }
 }

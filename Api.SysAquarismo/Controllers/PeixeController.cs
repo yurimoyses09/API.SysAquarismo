@@ -2,7 +2,6 @@
 using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.SysAquarismo.Application.Controllers;
@@ -21,19 +20,23 @@ public class PeixeController : ControllerBase
     }
 
     /// <summary>
-    /// Obtem dados do peixe pelo nome
+    /// Obtem dados do peixe pelo id
     /// </summary>
-    /// <param name="nome_peixe"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
     /// <response code="200">Sucesso ao buscar dados</response>
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
-    [HttpGet("nome_peixe")]
-    public async Task<IActionResult> ObtemPeixePorNome(string nome_peixe)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPeixePorId([FromRoute]int id)
     {
         try
         {
-            return Ok(new { data = "" });
+            var result = await _repository.GetPeixePorId(id);
+
+            var dados = _mapper.Map<IEnumerable<ReadPeixeDTO>>(result);
+
+            return Ok(new { data = dados });
         }
         catch (Exception ex)
         {

@@ -2,7 +2,6 @@ using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Infrastructure.Data;
 using Api.SysAquarismo.Infrastructure.Data.Repository;
 using Microsoft.Extensions.PlatformAbstractions;
-using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
