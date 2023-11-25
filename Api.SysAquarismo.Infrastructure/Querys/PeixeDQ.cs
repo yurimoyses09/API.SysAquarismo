@@ -1,13 +1,13 @@
 ﻿using Api.SysAquarismo.Domain.Enum;
 using Api.SysAquarismo.Domain.Models;
 
-namespace Api.SysAquarismo.Infrastructure.Querys
+namespace Api.SysAquarismo.Infrastructure.Querys;
+
+public static class PeixeDQ
 {
-    public static class PeixeDQ
+    internal static string BuscaDadosPeixeLogin(int id_usuario)
     {
-        internal static string BuscaDadosPeixeLogin(int id_usuario)
-        {
-            return @$"
+        return @$"
                 SELECT
             	   [ID_PEIXE] AS Id_Peixe
                   ,[NOME] AS Ds_Nome_Peixe
@@ -21,11 +21,11 @@ namespace Api.SysAquarismo.Infrastructure.Querys
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
               WHERE [ID_USUARIO] = {id_usuario}";
-        }
+    }
 
-        internal static string BuscaDadosPeixe(int id_peixe)
-        {
-            return @$"
+    internal static string BuscaDadosPeixe(int id_peixe)
+    {
+        return @$"
                 SELECT
             	   [ID_PEIXE] AS Id_Peixe
                   ,[NOME] AS Ds_Nome_Peixe
@@ -48,11 +48,11 @@ namespace Api.SysAquarismo.Infrastructure.Querys
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
               WHERE [ID_PEIXE] = {id_peixe}";
-        }
+    }
 
-        internal static string QueryCriaPeixe(Peixe peixe)
-        {
-            return @$"
+    internal static string QueryCriaPeixe(Peixe peixe)
+    {
+        return @$"
                 INSERT INTO [dbo].[TB_PEIXE]
                    ([NOME]
                    ,[ESPECIE]
@@ -81,6 +81,5 @@ namespace Api.SysAquarismo.Infrastructure.Querys
                     , '{peixe.Ds_Imagem}'
                     ,  {peixe.Id_Usuario}
                    )";
-        }
     }
 }

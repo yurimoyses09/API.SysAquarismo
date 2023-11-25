@@ -20,6 +20,7 @@ public class Peixe
     public DateTime Ds_Data_Aquisicao { get; set; }
 
     public Peixe() { }
+
     public Peixe(int id_Saude, int id, int id_Usuario, string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, int vl_Tamanho, DateTime ds_Data_Morte, string ds_Imagem, string ds_status_Saude, string ds_doenca, DateTime ds_Data_Aquisicao)
     {
         Id_Peixe = id;
