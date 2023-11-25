@@ -6,7 +6,7 @@ namespace Api.SysAquarismo.Domain.Dtos.Profiles;
 
 public class PeixeProfile : Profile
 {
-    public PeixeProfile() 
+    public PeixeProfile()
     {
         CreateMap<CreatePeixeDTO, Peixe>();
         CreateMap<UpdatePeixeDTO, Peixe>();
