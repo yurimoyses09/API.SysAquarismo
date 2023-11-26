@@ -39,7 +39,7 @@ public class PeixeRepository : IPeixeRepository
     {
         try
         {
-            string query = PeixeDQ.QueryCriaPeixe(peixe);
+            string query = PeixeDQ.QueryCriaPeixe();
 
             object parameters = new
             {
