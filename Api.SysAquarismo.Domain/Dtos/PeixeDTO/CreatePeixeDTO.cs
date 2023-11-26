@@ -32,8 +32,8 @@ public class CreatePeixeDTO
     [Required(ErrorMessage = "O atribudo de status da saude deve ser preenchido")]
     public string Ds_status_Saude { get; set; }
 
-    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
     [JsonPropertyName("dt_morte")]
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime Ds_Data_Morte { get; set; }
 
     [JsonPropertyName("ds_doenca")]

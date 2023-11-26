@@ -17,12 +17,14 @@ public class UsuarioRepository : IUsuarioRepository
         try
         {
             string queryUsuario = UsuarioQD.BuscaDadosUsuario(nome_usuario);
-            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario).Result;
+            object param = new { nome_usuario };
+            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario, param).Result;
 
             int id_usuario = dataUser.FirstOrDefault().Id_Usuario;
 
             string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin(id_usuario);
-            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe).Result;
+            object parametros_peixe = new { id_usuario };
+            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe, parametros_peixe).Result;
 
             var dados = new Usuario(peixes, dataUser.FirstOrDefault());
 
@@ -67,7 +69,9 @@ public class UsuarioRepository : IUsuarioRepository
         {
             string query = UsuarioQD.QueryCriaUsuario(usuario);
 
-            return _context.InsertAsync(query).Result;
+            object parameters = new { }; 
+
+            return _context.InsertAsync(query, parameters).Result;
         }
         catch (Exception)
         {

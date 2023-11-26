@@ -18,9 +18,13 @@ public class Context : IContext
 
             _connection = connection;
         }
-        catch (SqlException ex)
+        catch (SqlException)
         {
-            throw ex;
+            throw;
+        }
+        catch(Exception) 
+        {
+            throw;
         }
     }
 
@@ -36,14 +40,14 @@ public class Context : IContext
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Object>> SelectAsync<Object>(string query) => await _connection.QueryAsync<Object>(query);
+    public async Task<IEnumerable<Object>> SelectAsync<Object>(string query, object parameters) => await _connection.QueryAsync<Object>(query, parameters);
 
     /// <summary>
     /// Realiza insert de dados no banco de dados
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<int> InsertAsync(string query) => await _connection.ExecuteAsync(query);
+    public async Task<int> InsertAsync(string query, object parameters) => await _connection.ExecuteAsync(query, parameters);
 
     /// <summary>
     /// Realiza o delete de dados do banco de dados

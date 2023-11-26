@@ -24,7 +24,7 @@ public static class UsuarioQD
                 ,[TELEFONE] AS Ds_Telefone
                 ,[NOME_LOGIN] AS Ds_Nome_Usuario_Login
             FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_USUARIO]
-            WHERE [NOME_LOGIN] = '{nome_usuario}'";
+            WHERE [NOME_LOGIN] = @nome_usuario";
     }
 
     /// <summary>

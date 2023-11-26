@@ -23,7 +23,7 @@ public static class PeixeDQ
               WHERE [ID_USUARIO] = {id_usuario}";
     }
 
-    internal static string BuscaDadosPeixe(int id_peixe)
+    internal static string BuscaDadosPeixe()
     {
         return @$"
                 SELECT
@@ -47,7 +47,7 @@ public static class PeixeDQ
 
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
-              WHERE [ID_PEIXE] = {id_peixe}";
+              WHERE [ID_PEIXE] = @id_peixe";
     }
 
     internal static string QueryCriaPeixe(Peixe peixe)
@@ -68,18 +68,18 @@ public static class PeixeDQ
                    ,[ID_USUARIO])
              VALUES
                    (
-                      '{peixe.Ds_Nome_Peixe}'
-                    , '{peixe.Ds_Nome_Especie}'
-                    , '{peixe.Ds_Descricao}'
-                    ,  {(int)Enum.Parse(typeof(Enums.Sexo), peixe.Sexo)}
-                    ,  {(int)Enum.Parse(typeof(Enums.Status_Saude), peixe.Ds_status_Saude)}
-                    ,  {peixe.Vl_Peso}
-                    ,  {peixe.Vl_Tamanho}
-                    , '{DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)):yyyy-MM-dd}'
-                    , '{peixe.Ds_doenca}'
-                    , '{DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)):yyyy-MM-dd}'
-                    , '{peixe.Ds_Imagem}'
-                    ,  {peixe.Id_Usuario}
+                      @nome
+                    , @especie
+                    , @descrisao
+                    , @sexo
+                    , @status_saude
+                    , @peso
+                    , @tamanho
+                    , @data_morte
+                    , @doenca
+                    , @data_aquisicao
+                    , @imagem
+                    , @id_peixe
                    )";
     }
 }
