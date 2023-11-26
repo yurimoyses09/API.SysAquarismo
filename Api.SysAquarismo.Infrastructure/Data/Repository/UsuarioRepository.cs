@@ -1,4 +1,5 @@
-﻿using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Enum;
+using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Infrastructure.Querys;
 
@@ -16,17 +17,17 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            string queryUsuario = UsuarioQD.BuscaDadosUsuario(nome_usuario);
-            object param = new { nome_usuario };
-            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario, param).Result;
+            string queryUsuario = UsuarioQD.BuscaDadosUsuario();
+            object parameters_usuario = new { nome_usuario };
+            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario, parameters_usuario).Result;
 
             int id_usuario = dataUser.FirstOrDefault().Id_Usuario;
 
-            string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin(id_usuario);
-            object parametros_peixe = new { id_usuario };
-            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe, parametros_peixe).Result;
+            string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin();
+            object parameters_peixe = new { id_usuario };
+            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe, parameters_peixe).Result;
 
-            var dados = new Usuario(peixes, dataUser.FirstOrDefault());
+            Usuario dados = new(peixes, dataUser.FirstOrDefault());
 
             return dados;
         }
@@ -44,9 +45,16 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            string query = UsuarioQD.BuscaExistenciaLogin(usuario);
+            string query = UsuarioQD.BuscaExistenciaLogin();
 
-            return _context.SelectAsync(query).Result;
+            object parameters = new
+            {
+                nome_login = usuario.Ds_Nome_Usuario_Login,
+                usuario_ativo = 1
+                
+            };
+
+            return _context.SelectAsync(query, parameters).Result;
         }
         catch (Exception)
         {
@@ -58,18 +66,26 @@ public class UsuarioRepository : IUsuarioRepository
         }
     }
 
-    public Task GetUsuario(string nm_usuario)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<int> InsertUsuario(Usuario usuario)
     {
         try
         {
-            string query = UsuarioQD.QueryCriaUsuario(usuario);
+            string query = UsuarioQD.QueryCriaUsuario();
 
-            object parameters = new { }; 
+            object parameters = new
+            {
+                nome_usuario = usuario.Nome_Usuario,
+                idade = usuario.Idade,
+                telefone = usuario.Ds_Telefone,
+                sexo = (int)Enum.Parse(typeof(Enums.Sexo), usuario.Sexo),
+                pais = usuario.Ds_Pais,
+                nome_login = usuario.Ds_Nome_Usuario_Login,
+                senha = usuario.Ds_Senha,
+                senha_repetida = usuario.Ds_Senha,
+                email = usuario.Ds_Email,
+                status_usuario = 1,
+                dt_inclusao = DateTime.Now
+            }; 
 
             return _context.InsertAsync(query, parameters).Result;
         }
@@ -87,9 +103,16 @@ public class UsuarioRepository : IUsuarioRepository
     {
         try
         {
-            string query = UsuarioQD.BuscaUsuarioLogin(usuario);
+            string query = UsuarioQD.BuscaUsuarioLogin();
 
-            return _context.SelectAsync(query).Result;
+            object parameters = new
+            {
+                nome_login = usuario.Ds_Nome_Usuario_Login,
+                senha = usuario.Ds_Senha,
+                usuario_ativo = 1
+            };
+
+            return _context.SelectAsync(query, parameters).Result;
         }
         catch (Exception)
         {
@@ -101,8 +124,15 @@ public class UsuarioRepository : IUsuarioRepository
         }
     }
 
+    #region [ Não Implementado ]
     public Task ResetSenha(Usuario usuario)
     {
         throw new NotImplementedException();
     }
+
+    public Task GetUsuario(string nm_usuario)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
 }

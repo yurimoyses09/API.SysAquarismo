@@ -16,4 +16,9 @@ public class Enums
         DOENTE = 2,
         MORTO = 3
     }
+
+    public enum Situacao_Usuario
+    {
+        ATIVO = 1
+    }
 }

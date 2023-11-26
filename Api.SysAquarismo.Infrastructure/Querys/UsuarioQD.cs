@@ -14,7 +14,7 @@ public static class UsuarioQD
     /// <param name="nome_usuario"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    internal static string BuscaDadosUsuario(string nome_usuario)
+    internal static string BuscaDadosUsuario()
     {
         return @$"
             SELECT TOP (1) 
@@ -32,7 +32,7 @@ public static class UsuarioQD
     /// </summary>
     /// <param name="usuario"></param>
     /// <returns></returns>
-    internal static string BuscaExistenciaLogin(Usuario usuario)
+    internal static string BuscaExistenciaLogin()
     {
         return $@"
             SELECT 
@@ -48,8 +48,8 @@ public static class UsuarioQD
                 ,[ID_PEIXE]
             FROM [dbo].[TB_USUARIO] 
             WHERE 
-                [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
-                [USUARIO_ATIVO] = 1";
+                [NOME_LOGIN] = @nome_login AND
+                [USUARIO_ATIVO] = @usuario_ativo";
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public static class UsuarioQD
     /// </summary>
     /// <param name="usuario"></param>
     /// <returns></returns>
-    internal static string BuscaUsuarioLogin(Usuario usuario)
+    internal static string BuscaUsuarioLogin()
     {
         return $@"
             SELECT 
@@ -72,9 +72,9 @@ public static class UsuarioQD
                 ,[SENHA_COFIRMADA]
             FROM [dbo].[TB_USUARIO] 
             WHERE 
-                [NOME_LOGIN] = '{usuario.Ds_Nome_Usuario_Login}' AND
-                [SENHA] = '{usuario.Ds_Senha}' AND
-                [USUARIO_ATIVO] = 1";
+                [NOME_LOGIN] = @nome_login AND
+                [SENHA] = @senha AND
+                [USUARIO_ATIVO] = @usuario_ativo";
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public static class UsuarioQD
     /// </summary>
     /// <param name="usuario"></param>
     /// <returns></returns>
-    internal static string QueryCriaUsuario(Usuario usuario)
+    internal static string QueryCriaUsuario()
     {
         return $@"
             INSERT INTO [dbo].[TB_USUARIO]
@@ -98,16 +98,18 @@ public static class UsuarioQD
                    ,[USUARIO_ATIVO]
                    ,[DT_INCLUSAO])
              VALUES
-                   ('{usuario.Nome_Usuario}'
-                   ,{usuario.Idade}
-                   ,'{usuario.Ds_Telefone}'
-                   ,{(int)Enum.Parse(typeof(Enums.Sexo), usuario.Sexo)}
-                   ,'{usuario.Ds_Pais}'
-                   ,'{usuario.Ds_Nome_Usuario_Login}'
-                   ,'{usuario.Ds_Senha}'
-                   ,'{usuario.Ds_Senha}'
-                   ,'{usuario.Ds_Email}'
-                   ,1
-                   ,{DateTime.Now})";
+                   (
+                         @nome_usuario
+                        ,@idade
+                        ,@telefone
+                        ,@sexo
+                        ,@pais
+                        ,@nome_login
+                        ,@senha
+                        ,@senha_repetida
+                        ,@email
+                        ,@status_usuario
+                        ,@dt_inclusao
+                   )";
     }
 }

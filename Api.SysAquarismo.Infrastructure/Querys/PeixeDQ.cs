@@ -1,11 +1,8 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Models;
-
-namespace Api.SysAquarismo.Infrastructure.Querys;
+﻿namespace Api.SysAquarismo.Infrastructure.Querys;
 
 public static class PeixeDQ
 {
-    internal static string BuscaDadosPeixeLogin(int id_usuario)
+    internal static string BuscaDadosPeixeLogin()
     {
         return @$"
                 SELECT
@@ -20,7 +17,7 @@ public static class PeixeDQ
 
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
-              WHERE [ID_USUARIO] = {id_usuario}";
+              WHERE [ID_USUARIO] = @id_usuario";
     }
 
     internal static string BuscaDadosPeixe()
@@ -50,7 +47,7 @@ public static class PeixeDQ
               WHERE [ID_PEIXE] = @id_peixe";
     }
 
-    internal static string QueryCriaPeixe(Peixe peixe)
+    internal static string QueryCriaPeixe()
     {
         return @$"
                 INSERT INTO [dbo].[TB_PEIXE]
@@ -79,7 +76,7 @@ public static class PeixeDQ
                     , @doenca
                     , @data_aquisicao
                     , @imagem
-                    , @id_peixe
+                    , @id_usuario
                    )";
     }
 }

@@ -33,7 +33,7 @@ public class Context : IContext
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Object>> SelectAsync(string query) => await _connection.QueryAsync<Object>(query);
+    public async Task<IEnumerable<Object>> SelectAsync(string query, object parameters) => await _connection.QueryAsync<Object>(query, parameters);
 
     /// <summary>
     /// Realiza consultas de select no banco de dados
