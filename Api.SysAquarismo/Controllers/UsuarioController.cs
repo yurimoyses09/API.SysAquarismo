@@ -11,15 +11,16 @@ namespace Api.SysAquarismo.Application.Controllers;
 [Route("api/v1/usuario")]
 public class UsuarioController : ControllerBase
 {
-    readonly private IMapper _mapper;
-    readonly private IUsuarioRepository _repository;
+    private readonly IMapper _mapper;
+    private readonly IUsuarioRepository _repository;
+    private readonly ILogger _logger;
 
-    public UsuarioController(IMapper mapper, IUsuarioRepository repository)
+    public UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger logger)
     {
         _mapper = mapper;
         _repository = repository;
+        _logger = logger;
     }
-
 
     /// <summary>
     /// Cadastra usuario no sistema
@@ -33,18 +34,26 @@ public class UsuarioController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Dados recebidos no request!");
+
             Usuario usuario = _mapper.Map<Usuario>(createUsuario);
 
+            _logger.LogInformation("Buscando usuario com o mesmo login!");
             List<dynamic> validacao = _repository.BuscaMesmoLogin(usuario).Result;
-            if (validacao.Count > 0)
+            if (validacao.Count > 0) 
+            {
+                _logger.LogWarning("O usuario informado ja possui conta no sistema!");
                 return BadRequest(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!" });
+            }
 
+            _logger.LogInformation("Usuario criado com sucesso no sistema!");
             await _repository.InsertUsuario(usuario);
 
             return Ok(new { data = createUsuario });
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex.Message); 
             return BadRequest(new { data = ex.Message });
         }
     }
@@ -62,17 +71,61 @@ public class UsuarioController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Dados recebidos no request!");
+
             Usuario usuario = _mapper.Map<Usuario>(loginUsuario);
+
+            _logger.LogInformation("Efetuando login no sistema!");
             List<dynamic> usuarioValido = await _repository.LoginUsuario(usuario);
 
-            if (usuarioValido != null && usuarioValido.Count > 0) return Ok();
-            else return NotFound(new { data = "Usuario não cadastrado no sistema" });
+            if (usuarioValido != null && usuarioValido.Count > 0) 
+            {
+                _logger.LogInformation("Login efetuado com sucesso!");
+                return Ok();
+            }
+            else 
+            {
+                _logger.LogWarning("Usuario não cadastrado no sistema!");
+                return NotFound(new { data = "Usuario não cadastrado no sistema!" });
+            }
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex.Message);
             return BadRequest(new { data = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Busca todos os dados do usuario e os peixes relacionados a ele
+    /// </summary>
+    /// <param name="nome_usuario"></param>
+    /// <returns>IActionResult</returns>
+    /// <response code="201">Dados encontrados com sucesso</response>
+    /// <response code="400">Falha buscar dados</response>
+    [HttpGet("{nome_usuario}")]
+    public async Task<IActionResult> BuscaUsuarioPorNomeLogin(string nome_usuario)
+    {
+        try
+        {
+            _logger.LogInformation("Dados recebidos no request!");
+
+            _logger.LogInformation("Buscando dados no usuario no sistema!");
+            var result = await _repository.BuscaDadosUsuario(nome_usuario);
+
+            var dados = _mapper.Map<ReadUsuarioDTO>(result);
+
+            _logger.LogInformation("Dados recuperados com sucesso!");
+            return Ok(new { data = dados });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogInformation(ex.Message);
+            return BadRequest(new { data = ex.Message });
+        }
+    }
+
+    #region [ Endpoints nao implementados ainda ]
 
     /// <summary>
     /// Valida existencia de usuario para redefinir senha
@@ -83,7 +136,7 @@ public class UsuarioController : ControllerBase
     /// <response code="400">Falha ao buscar usuario</response>
     /// <response code="404">Usuario não localizado</response>
     [HttpGet("valida_usuario/{nome_usuario}")]
-    public async Task<IActionResult> ValidaUsuario(string nome_usuario)
+    public async Task<IActionResult> Valida(string nome_usuario)
     {
         try
         {
@@ -115,27 +168,5 @@ public class UsuarioController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Busca todos os dados do usuario e os peixes relacionados a ele
-    /// </summary>
-    /// <param name="nome_usuario"></param>
-    /// <returns>IActionResult</returns>
-    /// <response code="201">Dados encontrados com sucesso</response>
-    /// <response code="400">Falha buscar dados</response>
-    [HttpGet("{nome_usuario}")]
-    public async Task<IActionResult> BuscaDadosUsuario(string nome_usuario)
-    {
-        try
-        {
-            var result = await _repository.BuscaDadosUsuario(nome_usuario);
-
-            var dados = _mapper.Map<ReadUsuarioDTO>(result);
-
-            return Ok(new { data = dados });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { data = ex.Message });
-        }
-    }
+    #endregion
 }

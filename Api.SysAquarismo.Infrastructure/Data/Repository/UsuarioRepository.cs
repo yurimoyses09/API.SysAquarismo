@@ -1,5 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Infrastructure.Querys;
 
@@ -30,6 +29,9 @@ public class UsuarioRepository : IUsuarioRepository
             Usuario dados = new(peixes, dataUser.FirstOrDefault());
 
             return dados;
+        }catch(ArgumentNullException)
+        {
+            throw;
         }
         catch (Exception)
         {
@@ -77,7 +79,7 @@ public class UsuarioRepository : IUsuarioRepository
                 nome_usuario = usuario.Nome_Usuario,
                 idade = usuario.Idade,
                 telefone = usuario.Ds_Telefone,
-                sexo = (int)Enum.Parse(typeof(Enums.Sexo), usuario.Sexo),
+                sexo = (int)usuario.Sexo,
                 pais = usuario.Ds_Pais,
                 nome_login = usuario.Ds_Nome_Usuario_Login,
                 senha = usuario.Ds_Senha,

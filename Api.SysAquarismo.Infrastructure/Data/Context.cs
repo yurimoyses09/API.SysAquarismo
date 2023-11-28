@@ -1,6 +1,7 @@
 ﻿using Api.SysAquarismo.Domain.Interfaces;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using System.Collections;
 
 namespace Api.SysAquarismo.Infrastructure.Data;
 
@@ -33,7 +34,7 @@ public class Context : IContext
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Object>> SelectAsync(string query, object parameters) => await _connection.QueryAsync<Object>(query, parameters);
+    public async Task<IEnumerable> SelectAsync(string query, object parameters) => await _connection.QueryAsync(query, parameters);
 
     /// <summary>
     /// Realiza consultas de select no banco de dados
