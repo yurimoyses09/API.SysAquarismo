@@ -1,4 +1,6 @@
-﻿namespace Api.SysAquarismo.Domain.Models;
+﻿using Api.SysAquarismo.Domain.Enum;
+
+namespace Api.SysAquarismo.Domain.Models;
 
 public class Usuario
 {
@@ -9,11 +11,11 @@ public class Usuario
     public string Ds_Email { get; set; }
     public string Ds_Nome_Usuario_Login { get; set; }
     public string Ds_Senha { get; set; }
-    public string Sexo { get; set; }
+    public Enums.Sexo Sexo { get; set; }
     public string Ds_Pais { get; set; }
     public List<Peixe> Peixes { get; set; }
 
-    public Usuario(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<Peixe> peixes)
+    public Usuario(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, Enums.Sexo sexo, string ds_Pais, List<Peixe> peixes)
     {
         Id_Usuario = id_Usuario;
         Nome_Usuario = nome_Usuario;

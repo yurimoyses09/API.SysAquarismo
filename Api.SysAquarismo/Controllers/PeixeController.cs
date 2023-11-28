@@ -13,10 +13,12 @@ public class PeixeController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IPeixeRepository _repository;
-    public PeixeController(IMapper mapper, IPeixeRepository repository)
+    private readonly ILogger _logger;
+    public PeixeController(IMapper mapper, IPeixeRepository repository, ILogger logger)
     {
         _mapper = mapper;
         _repository = repository;
+        _logger = logger;
     }
 
     /// <summary>
@@ -28,7 +30,7 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPeixePorId([FromRoute]int id)
+    public async Task<IActionResult> GetPorId([FromRoute]int id)
     {
         try
         {
@@ -52,7 +54,7 @@ public class PeixeController : ControllerBase
     /// <response code="200">Sucesso ao cadastrar peixe</response>
     /// <response code="400">Falha ao cadastrar dados do peixe</response>
     [HttpPost("cadastra")]
-    public async Task<IActionResult> CadastraPeixe([FromBody] CreatePeixeDTO createPeixe)
+    public async Task<IActionResult> Cadastra([FromBody] CreatePeixeDTO createPeixe)
     {
         try
         {
@@ -67,6 +69,8 @@ public class PeixeController : ControllerBase
         }
     }
 
+    #region [ Endpoints nao implementados ainda ]
+
     /// <summary>
     /// Deleta peixe a partir do nome
     /// </summary>
@@ -76,7 +80,7 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao deletar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpDelete("deleta/{nome_peixe}")]
-    public async Task<IActionResult> DeletaPeixePorNome(string nome_peixe)
+    public async Task<IActionResult> DeletaPorId(string nome_peixe)
     {
         try
         {
@@ -96,8 +100,8 @@ public class PeixeController : ControllerBase
     /// <response code="200">Sucesso ao atualizar dados</response>
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
-    [HttpPut("atualiza_peixe")]
-    public async Task<IActionResult> AtualizaPeixe([FromBody] UpdatePeixeDTO updatePeixeDTO)
+    [HttpPut("atualiza")]
+    public async Task<IActionResult> AtualizaPorId([FromBody] UpdatePeixeDTO updatePeixeDTO)
     {
         try
         {
@@ -108,4 +112,6 @@ public class PeixeController : ControllerBase
             return BadRequest(new { data = ex.Message });
         }
     }
+
+    #endregion
 }

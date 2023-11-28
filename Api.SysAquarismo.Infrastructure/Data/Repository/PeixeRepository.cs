@@ -7,7 +7,6 @@ namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
 public class PeixeRepository : IPeixeRepository
 {
-
     private readonly IContext _context;
     public PeixeRepository(IContext context)
     {
@@ -46,12 +45,12 @@ public class PeixeRepository : IPeixeRepository
                 nome = peixe.Ds_Nome_Peixe,
                 especie = peixe.Ds_Nome_Especie,
                 descrisao = peixe.Ds_Descricao,
-                sexo = (int)Enum.Parse(typeof(Enums.Sexo), peixe.Sexo),
-                status_saude = (int)Enum.Parse(typeof(Enums.Status_Saude), peixe.Ds_status_Saude),
+                sexo = (int)peixe.Id_Sexo,
+                status_saude = (int)peixe.Id_Status_Saude,
                 peso = peixe.Vl_Peso,
                 tamanho = peixe.Vl_Tamanho,
                 data_morte = DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd"),
-                doenca = peixe.Ds_doenca,
+                doenca = peixe.Ds_Doenca,
                 data_aquisicao = DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)).ToString("yyyy-MM-dd"),
                 imagem = peixe.Ds_Imagem,
                 id_usuario = peixe.Id_Usuario

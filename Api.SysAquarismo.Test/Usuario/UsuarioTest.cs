@@ -1,4 +1,6 @@
-﻿namespace Api.SysAquarismo.Test.Usuario;
+﻿using Api.SysAquarismo.Domain.Enum;
+
+namespace Api.SysAquarismo.Test.Usuario;
 
 [TestClass]
 public class UsuarioTest
@@ -23,7 +25,7 @@ public class UsuarioTest
             Idade = 24,
             Id_Usuario = 1,
             Nome_Usuario = "Teste da Silva",
-            Sexo = "2"
+            Sexo = (Enums.Sexo)2
         };
 
         return usuario;

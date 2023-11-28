@@ -33,11 +33,6 @@ public class ReadPeixeDTO
     [JsonPropertyName("dt_aquisicao")]
     public DateTime Ds_Data_Aquisicao { get; set; }
 
-    public ReadPeixeDTO()
-    {
-
-    }
-
     public ReadPeixeDTO(int id_Peixe, int id_Usuario, string ds_Nome_Peixe, string ds_Nome_Especie, string ds_Descricao, string sexo, double vl_Peso, int vl_Tamanho, DateTime ds_Data_Morte, string ds_Imagem, string id_status_Saude, string ds_status_Saude, string ds_doenca, DateTime ds_Data_Aquisicao)
     {
         Id_Peixe = id_Peixe;
