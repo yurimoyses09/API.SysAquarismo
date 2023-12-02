@@ -17,9 +17,12 @@ public class CreateUsuarioDTO
     public int Idade { get; set; }
 
     [JsonPropertyName("telefone")]
+    [DataType(DataType.PhoneNumber)]
     public string Ds_Telefone { get; set; }
 
     [JsonPropertyName("email")]
+    [DataType(DataType.EmailAddress)]
+    [Required(ErrorMessage = "O campo email precisa ser preenchido")]
     public string Ds_Email { get; set; }
 
     [JsonPropertyName("sexo")]
@@ -38,11 +41,6 @@ public class CreateUsuarioDTO
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Atribuido de senha deve ser preenchido")]
     public string Ds_Senha { get; set; }
-
-    public CreateUsuarioDTO()
-    {
-
-    }
 
     public CreateUsuarioDTO(string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string sexo, string ds_Pais, string ds_Nome_Usuario_Login, string ds_Senha)
     {

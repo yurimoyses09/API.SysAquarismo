@@ -34,14 +34,25 @@ public class PeixeController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Dados recebidos no request!");
+
+            _logger.LogInformation($"Buscando dados do peixe de id {id}!");
             var result = await _repository.GetPeixePorId(id);
 
             var dados = _mapper.Map<IEnumerable<ReadPeixeDTO>>(result);
 
+            if (dados == null)
+            {
+                _logger.LogWarning("Peixe nao existe no sistema!");
+                return NotFound();
+            }
+
+            _logger.LogInformation("Peixe encontrado com sucesso!");
             return Ok(new { data = dados });
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex.Message);
             return BadRequest(new { data = ex.Message });
         }
     }
@@ -58,13 +69,18 @@ public class PeixeController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Dados recebidos no request!");
             Peixe peixe = _mapper.Map<Peixe>(createPeixe);
+
+            _logger.LogInformation("Incluindo peixe nas bases de dados!");
             await _repository.InsertPeixe(peixe);
 
+            _logger.LogInformation("Registro criado com sucesso");
             return Ok(new { data = createPeixe });
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex.Message);
             return BadRequest(new { data = ex.Message });
         }
     }
