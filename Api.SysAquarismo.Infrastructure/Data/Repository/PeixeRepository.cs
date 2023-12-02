@@ -1,5 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Infrastructure.Querys;
 

@@ -30,7 +30,7 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPorId([FromRoute]int id)
+    public async Task<IActionResult> GetPorId([FromRoute] int id)
     {
         try
         {

@@ -1,7 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Models;
-
-namespace Api.SysAquarismo.Infrastructure.Querys;
+﻿namespace Api.SysAquarismo.Infrastructure.Querys;
 
 /// <summary>
 /// Centralizadora de consultas na base de dados relacionada ao usuario
