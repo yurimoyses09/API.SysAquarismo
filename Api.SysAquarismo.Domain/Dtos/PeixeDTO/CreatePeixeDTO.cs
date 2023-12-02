@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using static Api.SysAquarismo.Domain.Enum.Enums;
 
 namespace Api.SysAquarismo.Domain.Dtos.PeixeDTO;
 
@@ -21,7 +22,7 @@ public class CreatePeixeDTO
 
     [JsonPropertyName("id_sexo")]
     [Required(ErrorMessage = "O tamando do atribudo de sexo não pode ultrapassar 5 caracteres")]
-    public Enums.Sexo Id_Sexo { get; set; }
+    public Sexo Id_Sexo { get; set; }
 
     [JsonPropertyName("peso")]
     public double Vl_Peso { get; set; }
@@ -31,9 +32,10 @@ public class CreatePeixeDTO
 
     [JsonPropertyName("id_status_saude")]
     [Required(ErrorMessage = "O atribudo de status da saude deve ser preenchido")]
-    public Enums.Status_Saude Id_Status_Saude { get; set; }
+    public Status_Saude Id_Status_Saude { get; set; }
 
     [JsonPropertyName("dt_morte")]
+    [DataType(DataType.Date)]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime Ds_Data_Morte { get; set; }
 
@@ -41,6 +43,7 @@ public class CreatePeixeDTO
     public string Ds_Doenca { get; set; }
 
     [JsonPropertyName("dt_aquisicao")]
+    [DataType(DataType.Date)]
     [Required(ErrorMessage = "O tribudo de data de aquisição deve ser preenchido")]
     [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
     public DateTime Ds_Data_Aquisicao { get; set; }

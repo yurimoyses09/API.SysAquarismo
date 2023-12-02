@@ -1,5 +1,5 @@
 ﻿using Api.SysAquarismo.Domain.Enum;
-using System.ComponentModel.DataAnnotations;
+using static Api.SysAquarismo.Domain.Enum.Enums;
 
 namespace Api.SysAquarismo.Domain.Models;
 
@@ -10,12 +10,12 @@ public class Peixe
     public string Ds_Nome_Peixe { get; set; }
     public string Ds_Nome_Especie { get; set; }
     public string Ds_Descricao { get; set; }
-    public Enums.Sexo Id_Sexo { get; set; }
+    public Sexo Id_Sexo { get; set; }
     public double Vl_Peso { get; set; }
     public int Vl_Tamanho { get; set; }
     public DateTime Ds_Data_Morte { get; set; }
     public string Ds_Imagem { get; set; }
-    public Enums.Status_Saude Id_Status_Saude { get; set; }
+    public Status_Saude Id_Status_Saude { get; set; }
     public string Ds_Doenca { get; set; }
     public DateTime Ds_Data_Aquisicao { get; set; }
 

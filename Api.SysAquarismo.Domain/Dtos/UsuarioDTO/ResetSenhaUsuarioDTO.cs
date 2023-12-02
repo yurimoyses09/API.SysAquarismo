@@ -11,10 +11,12 @@ public class ResetSenhaUsuarioDTO
     public string Nome_Usuario { get; set; }
 
     [JsonProperty("senha")]
+    [DataType(DataType.Password)]
     [Required(ErrorMessage = "Atribuido de senha deve ser preenchido")]
     public string Senha { get; set; }
 
     [JsonProperty("senha_repetida")]
+    [DataType(DataType.Password)]
     [Required(ErrorMessage = "Atribuido de senha_repetida deve ser preenchido")]
     public string Senha_Repetida { get; set; }
 
