@@ -9,5 +9,5 @@ public interface IUsuarioRepository
     Task GetUsuario(string nm_usuario);
     Task ResetSenha(Usuario usuario);
     Task<dynamic> BuscaMesmoLogin(Usuario usuario);
-    Task<dynamic> BuscaDadosUsuario(string nome_usuario);
+    Task<Usuario> BuscaDadosUsuario(string nome_usuario);
 }

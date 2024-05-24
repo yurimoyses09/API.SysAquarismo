@@ -6,18 +6,19 @@ public static class PeixeDQ
     {
         return @$"
                 SELECT
-            	   [ID_PEIXE] AS Id_Peixe
+                	   [ID_PEIXE] AS Id_Peixe
                   ,[NOME] AS Ds_Nome_Peixe
                   ,[ESPECIE] AS Ds_Nome_Especie
                   ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS Id_status_Saude
                   ,[ID_USUARIO] AS Id_Usuario
+	                ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS Sexo 
                 FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
 
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
-              WHERE [ID_USUARIO] = @id_usuario";
+                WHERE [ID_USUARIO] = @id_usuario";
     }
 
     internal static string BuscaDadosPeixe()
@@ -28,7 +29,7 @@ public static class PeixeDQ
                   ,[NOME] AS Ds_Nome_Peixe
                   ,[ESPECIE] AS Ds_Nome_Especie
                   ,[DS_PEIXE] AS Ds_Descricao
-                  ,[DS_SEXO] AS Sexo
+                  ,[dbo].[TB_PEIXE].[ID_SEXO] AS Sexo
                   ,[DS_STATUS_SAUDE] AS Ds_status_Saude
                   ,[PESO] AS Vl_Peso
                   ,[TAMANHO] AS Vl_Tamanho

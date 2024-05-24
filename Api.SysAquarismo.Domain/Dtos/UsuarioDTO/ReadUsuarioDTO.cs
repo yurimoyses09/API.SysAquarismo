@@ -1,5 +1,6 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
 using System.Text.Json.Serialization;
+using static Api.SysAquarismo.Domain.Enum.Enums;
 
 namespace Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
 
@@ -20,28 +21,9 @@ public class ReadUsuarioDTO
     [JsonPropertyName("senha_usuario")]
     public string Ds_Senha { get; set; }
     [JsonPropertyName("sexo")]
-    public string Sexo { get; set; }
+    public Sexo Sexo { get; set; }
     [JsonPropertyName("pais")]
     public string Ds_Pais { get; set; }
     [JsonPropertyName("peixes")]
     public List<ReadPeixeDTO> Peixes { get; set; }
-
-    public ReadUsuarioDTO()
-    {
-        
-    }
-
-    public ReadUsuarioDTO(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<ReadPeixeDTO> peixes)
-    {
-        Id_Usuario = id_Usuario;
-        Nome_Usuario = nome_Usuario;
-        Idade = idade;
-        Ds_Telefone = ds_Telefone;
-        Ds_Email = ds_Email;
-        Ds_Nome_Usuario_Login = ds_Nome_Usuario_Login;
-        Ds_Senha = ds_Senha;
-        Sexo = sexo;
-        Ds_Pais = ds_Pais;
-        Peixes = peixes;
-    }
 }

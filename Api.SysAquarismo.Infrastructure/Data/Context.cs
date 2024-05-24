@@ -7,7 +7,7 @@ namespace Api.SysAquarismo.Infrastructure.Data;
 
 public class Context : IContext
 {
-    public readonly SqlConnection _connection;
+    private readonly SqlConnection _connection;
     private readonly string connectionString = Environment.GetEnvironmentVariable("AMBIENTE_DB_DEV", EnvironmentVariableTarget.User);
 
     public Context(SqlConnection? connection = null)

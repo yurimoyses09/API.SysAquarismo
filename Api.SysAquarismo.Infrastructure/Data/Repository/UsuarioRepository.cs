@@ -12,7 +12,7 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
-    public async Task<dynamic> BuscaDadosUsuario(string nome_usuario)
+    public async Task<Usuario> BuscaDadosUsuario(string nome_usuario)
     {
         try
         {
@@ -29,6 +29,7 @@ public class UsuarioRepository : IUsuarioRepository
             Usuario dados = new(peixes, dataUser.FirstOrDefault());
 
             return dados;
+
         }catch(ArgumentNullException)
         {
             throw;
@@ -79,7 +80,7 @@ public class UsuarioRepository : IUsuarioRepository
                 nome_usuario = usuario.Nome_Usuario,
                 idade = usuario.Idade,
                 telefone = usuario.Ds_Telefone,
-                sexo = (int)usuario.Sexo,
+                sexo = usuario.Sexo,
                 pais = usuario.Ds_Pais,
                 nome_login = usuario.Ds_Nome_Usuario_Login,
                 senha = usuario.Ds_Senha,
