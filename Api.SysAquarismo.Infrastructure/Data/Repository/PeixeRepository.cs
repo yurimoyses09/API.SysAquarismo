@@ -1,5 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-using Api.SysAquarismo.Domain.Interfaces;
+﻿using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Infrastructure.Querys;
 
@@ -13,7 +12,7 @@ public class PeixeRepository : IPeixeRepository
         _context = context;
     }
 
-    public async Task<dynamic> GetPeixePorId(int id_peixe)
+    public async Task<IEnumerable<Peixe>> GetPeixePorId(int id_peixe)
     {
         try
         {
@@ -45,7 +44,7 @@ public class PeixeRepository : IPeixeRepository
                 nome = peixe.Ds_Nome_Peixe,
                 especie = peixe.Ds_Nome_Especie,
                 descrisao = peixe.Ds_Descricao,
-                sexo = (int)peixe.Id_Sexo,
+                sexo = peixe.Sexo,
                 status_saude = (int)peixe.Id_Status_Saude,
                 peso = peixe.Vl_Peso,
                 tamanho = peixe.Vl_Tamanho,

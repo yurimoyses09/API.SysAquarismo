@@ -13,9 +13,9 @@ public class UsuarioController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IUsuarioRepository _repository;
-    private readonly ILogger _logger;
+    private readonly ILogger<UsuarioController> _logger;
 
-    public UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger logger)
+    public UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger<UsuarioController> logger)
     {
         _mapper = mapper;
         _repository = repository;
@@ -40,14 +40,14 @@ public class UsuarioController : ControllerBase
 
             _logger.LogInformation("Buscando usuario com o mesmo login!");
             List<dynamic> validacao = _repository.BuscaMesmoLogin(usuario).Result;
-            if (validacao.Count > 0) 
+            if (validacao.Any()) 
             {
                 _logger.LogWarning("O usuario informado ja possui conta no sistema!");
-                return BadRequest(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!" });
+                return Ok(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!" });
             }
 
-            _logger.LogInformation("Usuario criado com sucesso no sistema!");
             await _repository.InsertUsuario(usuario);
+            _logger.LogInformation("Usuario criado com sucesso no sistema!");
 
             return Ok(new { data = createUsuario });
         }
@@ -111,16 +111,17 @@ public class UsuarioController : ControllerBase
             _logger.LogInformation("Dados recebidos no request!");
 
             _logger.LogInformation("Buscando dados no usuario no sistema!");
-            var result = await _repository.BuscaDadosUsuario(nome_usuario);
+            Usuario result = _repository.BuscaDadosUsuario(nome_usuario).Result;
 
-            var dados = _mapper.Map<ReadUsuarioDTO>(result);
+            ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result);
 
             _logger.LogInformation("Dados recuperados com sucesso!");
+            
             return Ok(new { data = dados });
         }
         catch (Exception ex)
         {
-            _logger.LogInformation(ex.Message);
+            _logger.LogError(ex.Message);
             return BadRequest(new { data = ex.Message });
         }
     }

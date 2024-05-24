@@ -13,8 +13,8 @@ public class PeixeController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IPeixeRepository _repository;
-    private readonly ILogger _logger;
-    public PeixeController(IMapper mapper, IPeixeRepository repository, ILogger logger)
+    private readonly ILogger<PeixeController> _logger;
+    public PeixeController(IMapper mapper, IPeixeRepository repository, ILogger<PeixeController> logger)
     {
         _mapper = mapper;
         _repository = repository;
@@ -30,7 +30,7 @@ public class PeixeController : ControllerBase
     /// <response code="400">Falha ao buscar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPorId([FromRoute]int id)
+    public async Task<IActionResult> GetPorId([FromRoute] int id)
     {
         try
         {
@@ -41,7 +41,7 @@ public class PeixeController : ControllerBase
 
             var dados = _mapper.Map<IEnumerable<ReadPeixeDTO>>(result);
 
-            if (dados == null)
+            if (dados == null || !dados.Any())
             {
                 _logger.LogWarning("Peixe nao existe no sistema!");
                 return NotFound();
