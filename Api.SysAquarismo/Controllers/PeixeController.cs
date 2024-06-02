@@ -1,6 +1,7 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
 using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
+using Api.SysAquarismo.Domain.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,12 +49,12 @@ public class PeixeController : ControllerBase
             }
 
             _logger.LogInformation("Peixe encontrado com sucesso!");
-            return Ok(new { data = dados });
+            return Ok(new Response<IEnumerable<ReadPeixeDTO>>(dados));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<IEnumerable<ReadPeixeDTO>?>(null, message: ex.Message));
         }
     }
 
@@ -76,12 +77,12 @@ public class PeixeController : ControllerBase
             await _repository.InsertPeixe(peixe);
 
             _logger.LogInformation("Registro criado com sucesso");
-            return Ok(new { data = createPeixe });
+            return Ok(new Response<CreatePeixeDTO>(createPeixe, "Registro criado com sucesso"));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<CreatePeixeDTO>(null, ex.Message));
         }
     }
 
@@ -105,11 +106,11 @@ public class PeixeController : ControllerBase
             await _repository.DeletePeixe(peixe);
 
             _logger.LogInformation("Registro Deletado com sucesso");
-            return Ok(new { data = deletePeixeDTO });
+            return Ok(new Response<DeletePeixeDTO>(deletePeixeDTO, "Registro criado com sucesso"));
         }
         catch (Exception ex)
         {
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<DeletePeixeDTO>(deletePeixeDTO, ex.Message));
         }
     }
 
@@ -133,11 +134,11 @@ public class PeixeController : ControllerBase
             await _repository.UpdatePeixe(peixe);
 
             _logger.LogInformation("Registro atualizado com sucesso");
-            return Ok(new { data = updatePeixeDTO });
+            return Ok(new Response<UpdatePeixeDTO>(updatePeixeDTO, "Registro criado com sucesso"));
         }
         catch (Exception ex)
         {
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<CreatePeixeDTO?>(null, ex.Message));
         }
     }
 }
