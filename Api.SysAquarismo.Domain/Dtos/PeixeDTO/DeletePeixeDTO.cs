@@ -2,4 +2,5 @@
 
 public class DeletePeixeDTO
 {
+    public int Id_Peixe { get; set; }
 }

@@ -55,14 +55,14 @@ public class Context : IContext
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<int> DeleteAsync(string query) => await _connection.ExecuteAsync(query);
+    public async Task<int> DeleteAsync(string query, object parameters) => await _connection.ExecuteAsync(query, parameters);
     
     /// <summary>
     /// Realiza o update de dados no banco de dados
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<int> UpdateAsync(string query) => await _connection.ExecuteAsync(query);
+    public async Task<int> UpdateAsync(string query, object parameters) => await _connection.ExecuteAsync(query, parameters);
 
     /// <summary>
     /// Fecha conexão com o bando de dados

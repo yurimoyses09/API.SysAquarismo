@@ -11,5 +11,6 @@ public class PeixeProfile : Profile
         CreateMap<CreatePeixeDTO, Peixe>();
         CreateMap<UpdatePeixeDTO, Peixe>();
         CreateMap<Peixe, ReadPeixeDTO>();
+        CreateMap<DeletePeixeDTO, Peixe>();
     }
 }

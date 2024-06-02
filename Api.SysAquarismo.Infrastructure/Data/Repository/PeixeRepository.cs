@@ -53,7 +53,6 @@ public class PeixeRepository : IPeixeRepository
                 data_aquisicao = DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)).ToString("yyyy-MM-dd"),
                 imagem = peixe.Ds_Imagem,
                 id_usuario = peixe.Id_Usuario
-
             };
 
             return _context.InsertAsync(query, parameters).Result;
@@ -68,20 +67,70 @@ public class PeixeRepository : IPeixeRepository
         }
     }
 
-    #region [ Não implementado ]
-    public Task DeletePeixe(Peixe peixe)
+    public async Task<int> DeletePeixe(Peixe peixe)
     {
-        throw new NotImplementedException();
+        try
+        {
+            string query = PeixeDQ.QueryDeletaPeixe();
+
+            object parameters = new
+            {
+                IdPeixe = peixe.Id_Peixe
+            };
+
+            return await _context.DeleteAsync(query, parameters);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
     }
+
+    public async Task<int> UpdatePeixe(Peixe peixe)
+    {
+        try
+        {
+            string query = PeixeDQ.QueryUpdatePeixe();
+
+            object parameters = new
+            {
+                nome = peixe.Ds_Nome_Peixe,
+                especie = peixe.Ds_Nome_Especie,
+                descrisao = peixe.Ds_Descricao,
+                sexo = peixe.Sexo,
+                status_saude = (int)peixe.Id_Status_Saude,
+                peso = peixe.Vl_Peso,
+                tamanho = peixe.Vl_Tamanho,
+                data_morte = peixe.Ds_Data_Morte != null ? DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd") : null, //DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd") ?? null,
+                doenca = peixe.Ds_Doenca,
+                data_aquisicao = peixe.Ds_Data_Aquisicao != null ? DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)).ToString("yyyy-MM-dd") : null,
+                imagem = peixe.Ds_Imagem,
+                IdPeixe = peixe.Id_Peixe
+            };
+
+            return await _context.UpdateAsync(query, parameters);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        finally
+        {
+            await _context.CloseConnection();
+        }
+    }
+
+    #region [ Não implementado ]
 
     public Task GetPeixe()
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdatePeixe(Peixe peixe)
-    {
-        throw new NotImplementedException();
-    }
     #endregion
 }
