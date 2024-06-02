@@ -25,7 +25,7 @@ public class UsuarioTest
             Idade = 24,
             Id_Usuario = 1,
             Nome_Usuario = "Teste da Silva",
-            Sexo = (Enums.Sexo)2
+            Sexo = 2
         };
 
         return usuario;

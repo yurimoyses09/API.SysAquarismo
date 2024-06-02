@@ -25,9 +25,9 @@ public class PeixeTest
             Ds_Nome_Especie = "",
             Ds_Nome_Peixe = "",
             Id_Peixe = 3,
-            Id_Status_Saude = (Enums.Status_Saude)2,
+            Id_Status_Saude = 2,
             Id_Usuario = 4,
-            Id_Sexo = (Enums.Sexo)3,
+            Sexo = 3,
             Vl_Peso = 4,
             Vl_Tamanho = 5,
         };

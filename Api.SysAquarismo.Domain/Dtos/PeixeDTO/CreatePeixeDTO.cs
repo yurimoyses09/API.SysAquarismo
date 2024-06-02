@@ -15,6 +15,7 @@ public class CreatePeixeDTO
     [Required(ErrorMessage = "O atributo de nome da especie deve ser preenchido")]
     [MaxLength(50, ErrorMessage = "O tamanho do nome da especie nao pode ultrapassar 50 caracteres")]
     public string Ds_Nome_Especie { get; set; }
+    
     [JsonPropertyName("descricao")]
     public string Ds_Descricao { get; set; }
 

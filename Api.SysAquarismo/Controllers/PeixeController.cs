@@ -85,22 +85,27 @@ public class PeixeController : ControllerBase
         }
     }
 
-    #region [ Endpoints nao implementados ainda ]
-
     /// <summary>
-    /// Deleta peixe a partir do nome
+    /// Deleta peixe
     /// </summary>
-    /// <param name="nome_peixe"></param>
+    /// <param name="deletePeixeDTO"></param>
     /// <returns></returns>
     /// <response code="200">Sucesso ao deletar dados</response>
     /// <response code="400">Falha ao deletar dados do peixe</response>
     /// <response code="404">Peixe nao cadastrado</response>
-    [HttpDelete("deleta/{nome_peixe}")]
-    public async Task<IActionResult> DeletaPorId(string nome_peixe)
+    [HttpDelete("deleta")]
+    public async Task<IActionResult> DeletaPorId([FromBody] DeletePeixeDTO deletePeixeDTO)
     {
         try
         {
-            return Ok(new { data = "" });
+            _logger.LogInformation("Dados recebidos no request!");
+            Peixe peixe = _mapper.Map<Peixe>(deletePeixeDTO);
+
+            _logger.LogInformation("Deltando peixe nas bases de dados!");
+            await _repository.DeletePeixe(peixe);
+
+            _logger.LogInformation("Registro Deletado com sucesso");
+            return Ok(new { data = deletePeixeDTO });
         }
         catch (Exception ex)
         {
@@ -121,13 +126,18 @@ public class PeixeController : ControllerBase
     {
         try
         {
-            return Ok(new { data = "" });
+            _logger.LogInformation("Dados recebidos no request!");
+            Peixe peixe = _mapper.Map<Peixe>(updatePeixeDTO);
+
+            _logger.LogInformation("Atualizando peixe nas bases de dados!");
+            await _repository.UpdatePeixe(peixe);
+
+            _logger.LogInformation("Registro atualizado com sucesso");
+            return Ok(new { data = updatePeixeDTO });
         }
         catch (Exception ex)
         {
             return BadRequest(new { data = ex.Message });
         }
     }
-
-    #endregion
 }

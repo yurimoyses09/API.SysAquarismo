@@ -1,4 +1,6 @@
-﻿namespace Api.SysAquarismo.Infrastructure.Querys;
+﻿using Api.SysAquarismo.Domain.Models;
+
+namespace Api.SysAquarismo.Infrastructure.Querys;
 
 public static class PeixeDQ
 {
@@ -6,12 +8,12 @@ public static class PeixeDQ
     {
         return @$"
                 SELECT
-                	   [ID_PEIXE] AS Id_Peixe
+                   [ID_PEIXE] AS Id_Peixe
                   ,[NOME] AS Ds_Nome_Peixe
                   ,[ESPECIE] AS Ds_Nome_Especie
                   ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS Id_status_Saude
                   ,[ID_USUARIO] AS Id_Usuario
-	                ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS Sexo 
+	              ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS Sexo 
                 FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
@@ -79,5 +81,29 @@ public static class PeixeDQ
                     , @imagem
                     , @id_usuario
                    )";
+    }
+
+    internal static string QueryDeletaPeixe()
+    {
+        return @"DELETE FROM [dbo].[TB_PEIXE] WHERE ID_PEIXE = @IdPeixe";
+    }
+
+    internal static string QueryUpdatePeixe()
+    {
+        return @"
+               UPDATE [dbo].[TB_PEIXE]
+               SET [NOME] = @nome
+                  ,[ESPECIE] = @especie
+                  ,[DS_PEIXE] = @descrisao
+                  ,[ID_SEXO] = @sexo
+                  ,[ID_STATUS_SAUDE] = @status_saude
+                  ,[PESO] = @peso
+                  ,[TAMANHO] = @tamanho
+                  ,[DT_MORTE] = @data_morte
+                  ,[DS_DOENCA] = @doenca
+                  ,[DT_AQUISICAO] = @data_aquisicao
+                  ,[IMG_PEIXE] = @imagem
+               WHERE [ID_PEIXE] = @IdPeixe
+        ";
     }
 }
