@@ -9,25 +9,25 @@ public class GetUsuarioDTO
     public GetUsuarioDTO(int id_Usuario, string nome_Usuario, int idade, string ds_Telefone, string ds_Email, string ds_Nome_Usuario_Login, string ds_Senha, string sexo, string ds_Pais, List<Peixe> peixes)
     {
         Id_Usuario = id_Usuario;
-        Nome_Usuario = nome_Usuario;
-        Idade = idade;
-        Ds_Telefone = ds_Telefone;
-        Ds_Email = ds_Email;
-        Ds_Nome_Usuario_Login = ds_Nome_Usuario_Login;
-        Ds_Senha = ds_Senha;
-        Sexo = sexo;
-        Ds_Pais = ds_Pais;
-        Peixes = peixes;
+        nome_usuario = nome_Usuario;
+        idade = idade;
+        telefone = ds_Telefone;
+        email = ds_Email;
+        nome_login = ds_Nome_Usuario_Login;
+        senha = ds_Senha;
+        sexo = sexo;
+        pais = ds_Pais;
+        peixes = peixes;
     }
 
     public int Id_Usuario { get; set; }
-    public string Nome_Usuario { get; set; }
-    public int Idade { get; set; }
-    public string Ds_Telefone { get; set; }
-    public string Ds_Email { get; set; }
-    public string Ds_Nome_Usuario_Login { get; set; }
-    public string Ds_Senha { get; set; }
-    public string Sexo { get; set; }
-    public string Ds_Pais { get; set; }
-    public List<Peixe> Peixes { get; set; }
+    public string nome_usuario { get; set; }
+    public int idade { get; set; }
+    public string telefone { get; set; }
+    public string email { get; set; }
+    public string nome_login { get; set; }
+    public string senha { get; set; }
+    public int sexo { get; set; }
+    public string pais { get; set; }
+    public List<Peixe> peixes { get; set; }
 }

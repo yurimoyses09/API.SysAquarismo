@@ -102,11 +102,11 @@ public class PeixeController : ControllerBase
             _logger.LogInformation("Dados recebidos no request!");
             Peixe peixe = _mapper.Map<Peixe>(deletePeixeDTO);
 
-            _logger.LogInformation("Deltando peixe nas bases de dados!");
+            _logger.LogInformation("Deletando peixe nas bases de dados!");
             await _repository.DeletePeixe(peixe);
 
             _logger.LogInformation("Registro Deletado com sucesso");
-            return Ok(new Response<DeletePeixeDTO>(deletePeixeDTO, "Registro criado com sucesso"));
+            return Ok(new Response<DeletePeixeDTO>(deletePeixeDTO, "Registro deletado com sucesso"));
         }
         catch (Exception ex)
         {

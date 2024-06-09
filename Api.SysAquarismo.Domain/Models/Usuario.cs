@@ -1,32 +1,30 @@
-﻿using static Api.SysAquarismo.Domain.Enum.Enums;
-
-namespace Api.SysAquarismo.Domain.Models;
+﻿namespace Api.SysAquarismo.Domain.Models;
 
 public class Usuario
 {
-    public int Id_Usuario { get; set; }
-    public string Nome_Usuario { get; set; }
-    public int Idade { get; set; }
-    public string Ds_Telefone { get; set; }
-    public string Ds_Email { get; set; }
-    public string Ds_Nome_Usuario_Login { get; set; }
-    public string Ds_Senha { get; set; }
-    public int Sexo { get; set; }
-    public string Ds_Pais { get; set; }
-    public List<Peixe> Peixes { get; set; }
+    public int id_usuario { get; set; }
+    public string nome_usuario { get; set; }
+    public int idade { get; set; }
+    public string telefone { get; set; }
+    public string email { get; set; }
+    public string nome_login { get; set; }
+    public string senha { get; set; }
+    public int sexo { get; set; }
+    public string pais { get; set; }
+    public List<Peixe> peixes { get; set; }
 
     public Usuario() { }
 
     public Usuario(IEnumerable<Peixe> peixe, Usuario usuario)
     {
-        Id_Usuario = usuario.Id_Usuario;
-        Nome_Usuario = usuario.Nome_Usuario.ToString();
-        Ds_Telefone = usuario.Ds_Telefone.ToString();
-        Idade = usuario.Idade;
-        Ds_Nome_Usuario_Login = usuario.Ds_Nome_Usuario_Login;
-        Peixes = new List<Peixe>();
+        id_usuario = usuario.id_usuario;
+        nome_usuario = usuario.nome_usuario.ToString();
+        telefone = usuario.telefone.ToString();
+        idade = usuario.idade;
+        nome_login = usuario.nome_login;
+        peixes = new List<Peixe>();
 
         foreach (Peixe pe in peixe)
-            Peixes.Add(pe);
+            peixes.Add(pe);
     }
 }

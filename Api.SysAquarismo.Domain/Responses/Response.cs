@@ -2,13 +2,13 @@
 
 public class Response<TData>
 {
-    public TData? Data { get; set; }
+    public TData? data { get; set; }
 
-    public string? Message { get; set; }
+    public string? message { get; set; }
 
     public Response(TData? data, string? message = null)
     {
-        Data = data;
-        Message = message;
+        this.data = data;
+        this.message = message;
     }
 }

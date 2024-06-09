@@ -1,6 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Enum;
-
-namespace Api.SysAquarismo.Test.Usuario;
+﻿namespace Api.SysAquarismo.Test.Usuario;
 
 [TestClass]
 public class UsuarioTest
@@ -17,15 +15,15 @@ public class UsuarioTest
     {
         Domain.Models.Usuario usuario = new()
         {
-            Ds_Email = "teste@teste.com",
-            Ds_Nome_Usuario_Login = "teste_login",
-            Ds_Pais = "Teste",
-            Ds_Senha = "SenhaTeste",
-            Ds_Telefone = "1199111111",
-            Idade = 24,
-            Id_Usuario = 1,
-            Nome_Usuario = "Teste da Silva",
-            Sexo = 2
+            email = "teste@teste.com",
+            nome_login = "teste_login",
+            pais = "Teste",
+            senha = "SenhaTeste",
+            telefone = "1199111111",
+            idade = 24,
+            id_usuario = 1,
+            nome_usuario = "Teste da Silva",
+            sexo = 2
         };
 
         return usuario;

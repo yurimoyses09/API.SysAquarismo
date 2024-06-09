@@ -4,23 +4,19 @@ using Api.SysAquarismo.Infrastructure.Querys;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
-public class UsuarioRepository : IUsuarioRepository
+public class UsuarioRepository(IContext context) : IUsuarioRepository
 {
-    private readonly IContext _context;
-    public UsuarioRepository(IContext context)
-    {
-        _context = context;
-    }
+    private readonly IContext _context = context;
 
-    public async Task<Usuario> BuscaDadosUsuario(string nome_usuario)
+    public async Task<Usuario> BuscaDadosUsuario(string nome_login)
     {
         try
         {
             string queryUsuario = UsuarioQD.BuscaDadosUsuario();
-            object parameters_usuario = new { nome_usuario };
+            object parameters_usuario = new { nome_login };
             IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario, parameters_usuario).Result;
 
-            int id_usuario = dataUser.FirstOrDefault().Id_Usuario;
+            int id_usuario = dataUser.FirstOrDefault().id_usuario;
 
             string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin();
             object parameters_peixe = new { id_usuario };
@@ -30,7 +26,8 @@ public class UsuarioRepository : IUsuarioRepository
 
             return dados;
 
-        }catch(ArgumentNullException)
+        }
+        catch (ArgumentNullException)
         {
             throw;
         }
@@ -52,9 +49,8 @@ public class UsuarioRepository : IUsuarioRepository
 
             object parameters = new
             {
-                nome_login = usuario.Ds_Nome_Usuario_Login,
+                usuario.nome_login,
                 usuario_ativo = 1
-                
             };
 
             return _context.SelectAsync(query, parameters).Result;
@@ -77,18 +73,18 @@ public class UsuarioRepository : IUsuarioRepository
 
             object parameters = new
             {
-                nome_usuario = usuario.Nome_Usuario,
-                idade = usuario.Idade,
-                telefone = usuario.Ds_Telefone,
-                sexo = usuario.Sexo,
-                pais = usuario.Ds_Pais,
-                nome_login = usuario.Ds_Nome_Usuario_Login,
-                senha = usuario.Ds_Senha,
-                senha_repetida = usuario.Ds_Senha,
-                email = usuario.Ds_Email,
+                usuario.nome_usuario,
+                usuario.idade,
+                usuario.telefone,
+                usuario.sexo,
+                usuario.pais,
+                usuario.nome_login,
+                usuario.senha,
+                senha_repetida = usuario.senha,
+                usuario.email,
                 status_usuario = 1,
                 dt_inclusao = DateTime.Now
-            }; 
+            };
 
             return _context.InsertAsync(query, parameters).Result;
         }
@@ -110,8 +106,8 @@ public class UsuarioRepository : IUsuarioRepository
 
             object parameters = new
             {
-                nome_login = usuario.Ds_Nome_Usuario_Login,
-                senha = usuario.Ds_Senha,
+                usuario.nome_login,
+                usuario.senha,
                 usuario_ativo = 1
             };
 
