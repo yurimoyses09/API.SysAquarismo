@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
         Title = "Api SysAquarismo",
-        Version = "v1",
+        Version = "v2",
         Description = "Api responsavel pelo gerenciamento do Sistema SysAquarismo",
         Contact = new Microsoft.OpenApi.Models.OpenApiContact 
         {
@@ -48,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api SysAquarismo v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api SysAquarismo v2");
     });
 }
 

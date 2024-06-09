@@ -1,5 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Dtos.PeixeDTO;
-using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
+﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
 using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Domain.Responses;
@@ -83,7 +82,7 @@ public class UsuarioController : ControllerBase
             if (usuarioValido != null && usuarioValido.Count > 0) 
             {
                 _logger.LogInformation("Login efetuado com sucesso!");
-                return BadRequest(new Response<LoginUsuarioDTO?>(loginUsuario, "Login efetuado com sucesso!"));
+                return Ok(new Response<LoginUsuarioDTO?>(loginUsuario, "Login efetuado com sucesso!"));
             }
             else 
             {
