@@ -1,6 +1,7 @@
 ﻿using Api.SysAquarismo.Domain.Dtos.UsuarioDTO;
 using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
+using Api.SysAquarismo.Domain.Responses;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,18 +44,18 @@ public class UsuarioController : ControllerBase
             if (validacao.Any()) 
             {
                 _logger.LogWarning("O usuario informado ja possui conta no sistema!");
-                return Ok(new { data = $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!" });
+                return Ok(new Response<CreateUsuarioDTO>(createUsuario, $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!"));
             }
 
             await _repository.InsertUsuario(usuario);
             _logger.LogInformation("Usuario criado com sucesso no sistema!");
 
-            return Ok(new { data = createUsuario });
+            return Ok(new Response<CreateUsuarioDTO>(createUsuario, "Usuario criado com sucesso no sistema!"));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message); 
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<CreateUsuarioDTO?>(null, ex.Message));
         }
     }
 
@@ -81,18 +82,18 @@ public class UsuarioController : ControllerBase
             if (usuarioValido != null && usuarioValido.Count > 0) 
             {
                 _logger.LogInformation("Login efetuado com sucesso!");
-                return Ok();
+                return Ok(new Response<LoginUsuarioDTO?>(loginUsuario, "Login efetuado com sucesso!"));
             }
             else 
             {
                 _logger.LogWarning("Usuario não cadastrado no sistema!");
-                return NotFound(new { data = "Usuario não cadastrado no sistema!" });
+                return BadRequest(new Response<LoginUsuarioDTO?>(loginUsuario, "Usuario não cadastrado no sistema!"));
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<LoginUsuarioDTO?>(null, ex.Message));
         }
     }
 
@@ -111,18 +112,18 @@ public class UsuarioController : ControllerBase
             _logger.LogInformation("Dados recebidos no request!");
 
             _logger.LogInformation("Buscando dados no usuario no sistema!");
-            Usuario result = _repository.BuscaDadosUsuario(nome_usuario).Result;
+            Usuario result = await _repository.BuscaDadosUsuario(nome_usuario);
 
             ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result);
 
             _logger.LogInformation("Dados recuperados com sucesso!");
-            
-            return Ok(new { data = dados });
+
+            return BadRequest(new Response<ReadUsuarioDTO?>(dados, "Dados recuperados com sucesso!"));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex.Message);
-            return BadRequest(new { data = ex.Message });
+            return BadRequest(new Response<ReadUsuarioDTO?>(null, ex.Message));
         }
     }
 
