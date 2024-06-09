@@ -8,12 +8,12 @@ public static class PeixeDQ
     {
         return @$"
                 SELECT
-                   [ID_PEIXE] AS Id_Peixe
-                  ,[NOME] AS Ds_Nome_Peixe
-                  ,[ESPECIE] AS Ds_Nome_Especie
-                  ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS Id_status_Saude
-                  ,[ID_USUARIO] AS Id_Usuario
-	              ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS Sexo 
+                   [ID_PEIXE] AS id_peixe
+                  ,[NOME] AS nome_peixe
+                  ,[ESPECIE] AS nome_especie
+                  ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS id_saude
+                  ,[ID_USUARIO] AS id_usuario
+	              ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS sexo 
                 FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
@@ -27,20 +27,20 @@ public static class PeixeDQ
     {
         return @$"
                 SELECT
-            	   [ID_PEIXE] AS Id_Peixe
-                  ,[NOME] AS Ds_Nome_Peixe
-                  ,[ESPECIE] AS Ds_Nome_Especie
-                  ,[DS_PEIXE] AS Ds_Descricao
-                  ,[dbo].[TB_PEIXE].[ID_SEXO] AS Sexo
+            	   [ID_PEIXE] AS id_peixe
+                  ,[NOME] AS nome_peixe
+                  ,[ESPECIE] AS nome_especie
+                  ,[DS_PEIXE] AS descricao
+                  ,[dbo].[TB_PEIXE].[ID_SEXO] AS sexo
                   ,[DS_STATUS_SAUDE] AS Ds_status_Saude
-                  ,[PESO] AS Vl_Peso
-                  ,[TAMANHO] AS Vl_Tamanho
-                  ,[DT_MORTE] AS Ds_Data_Morte
+                  ,[PESO] AS peso
+                  ,[TAMANHO] AS tamanho
+                  ,[DT_MORTE] AS dt_morte
                   ,[DS_DOENCA] AS Ds_doenca
-                  ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS Id_status_Saude
-                  ,[DT_AQUISICAO] AS Ds_Data_Aquisicao
-                  ,[IMG_PEIXE]
-                  ,[ID_USUARIO] AS Id_Usuario
+                  ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS id_saude
+                  ,[DT_AQUISICAO] AS dt_aquisicao
+                  ,[IMG_PEIXE] AS ds_imagem
+                  ,[ID_USUARIO] AS id_usuario
                 FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
                 [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
@@ -68,42 +68,42 @@ public static class PeixeDQ
                    ,[ID_USUARIO])
              VALUES
                    (
-                      @nome
-                    , @especie
-                    , @descrisao
+                      @nome_peixe
+                    , @nome_especie
+                    , @descricao
                     , @sexo
-                    , @status_saude
+                    , @id_saude
                     , @peso
                     , @tamanho
-                    , @data_morte
-                    , @doenca
-                    , @data_aquisicao
-                    , @imagem
+                    , @dt_morte
+                    , @ds_doenca
+                    , @dt_aquisicao
+                    , @ds_imagem
                     , @id_usuario
                    )";
     }
 
     internal static string QueryDeletaPeixe()
     {
-        return @"DELETE FROM [dbo].[TB_PEIXE] WHERE ID_PEIXE = @IdPeixe";
+        return @"DELETE FROM [dbo].[TB_PEIXE] WHERE ID_PEIXE = @id_peixe";
     }
 
     internal static string QueryUpdatePeixe()
     {
         return @"
                UPDATE [dbo].[TB_PEIXE]
-               SET [NOME] = @nome
-                  ,[ESPECIE] = @especie
-                  ,[DS_PEIXE] = @descrisao
+               SET [NOME] = @nome_peixe
+                  ,[ESPECIE] = @nome_especie
+                  ,[DS_PEIXE] = @descricao
                   ,[ID_SEXO] = @sexo
-                  ,[ID_STATUS_SAUDE] = @status_saude
+                  ,[ID_STATUS_SAUDE] = @id_saude
                   ,[PESO] = @peso
                   ,[TAMANHO] = @tamanho
-                  ,[DT_MORTE] = @data_morte
-                  ,[DS_DOENCA] = @doenca
-                  ,[DT_AQUISICAO] = @data_aquisicao
-                  ,[IMG_PEIXE] = @imagem
-               WHERE [ID_PEIXE] = @IdPeixe
+                  ,[DT_MORTE] = @dt_morte
+                  ,[DS_DOENCA] = @ds_doenca
+                  ,[DT_AQUISICAO] = @dt_aquisicao
+                  ,[IMG_PEIXE] = @ds_imagem
+               WHERE [ID_PEIXE] = @id_peixe
         ";
     }
 }

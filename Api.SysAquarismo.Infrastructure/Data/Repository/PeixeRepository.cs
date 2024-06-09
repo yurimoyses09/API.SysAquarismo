@@ -41,18 +41,18 @@ public class PeixeRepository : IPeixeRepository
 
             object parameters = new
             {
-                nome = peixe.Ds_Nome_Peixe,
-                especie = peixe.Ds_Nome_Especie,
-                descrisao = peixe.Ds_Descricao,
-                sexo = peixe.Sexo,
-                status_saude = (int)peixe.Id_Status_Saude,
-                peso = peixe.Vl_Peso,
-                tamanho = peixe.Vl_Tamanho,
-                data_morte = DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd"),
-                doenca = peixe.Ds_Doenca,
-                data_aquisicao = DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)).ToString("yyyy-MM-dd"),
-                imagem = peixe.Ds_Imagem,
-                id_usuario = peixe.Id_Usuario
+                peixe.nome_peixe,
+                peixe.nome_especie,
+                peixe.descricao,
+                peixe.sexo,
+                peixe.id_saude,
+                peixe.peso,
+                peixe.tamanho,
+                dt_morte = peixe.dt_morte != null ? DateTime.Parse(Convert.ToString(peixe.dt_morte)).ToString("yyyy-MM-dd") : null,
+                peixe.ds_doenca,
+                dt_aquisicao = peixe.dt_aquisicao != null ? DateTime.Parse(Convert.ToString(peixe.dt_aquisicao)).ToString("yyyy-MM-dd") : null,
+                peixe.ds_imagem,
+                peixe.id_usuario
             };
 
             return _context.InsertAsync(query, parameters).Result;
@@ -75,7 +75,7 @@ public class PeixeRepository : IPeixeRepository
 
             object parameters = new
             {
-                IdPeixe = peixe.Id_Peixe
+                peixe.id_peixe
             };
 
             return await _context.DeleteAsync(query, parameters);
@@ -99,18 +99,18 @@ public class PeixeRepository : IPeixeRepository
 
             object parameters = new
             {
-                nome = peixe.Ds_Nome_Peixe,
-                especie = peixe.Ds_Nome_Especie,
-                descrisao = peixe.Ds_Descricao,
-                sexo = peixe.Sexo,
-                status_saude = (int)peixe.Id_Status_Saude,
-                peso = peixe.Vl_Peso,
-                tamanho = peixe.Vl_Tamanho,
-                data_morte = peixe.Ds_Data_Morte != null ? DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd") : null, //DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd") ?? null,
-                doenca = peixe.Ds_Doenca,
-                data_aquisicao = peixe.Ds_Data_Aquisicao != null ? DateTime.Parse(Convert.ToString(peixe.Ds_Data_Aquisicao)).ToString("yyyy-MM-dd") : null,
-                imagem = peixe.Ds_Imagem,
-                IdPeixe = peixe.Id_Peixe
+                peixe.nome_peixe,
+                peixe.nome_especie,
+                peixe.descricao,
+                peixe.sexo,
+                peixe.id_saude,
+                peixe.peso,
+                peixe.tamanho,
+                dt_morte = peixe.dt_morte != null ? DateTime.Parse(Convert.ToString(peixe.dt_morte)).ToString("yyyy-MM-dd") : null, //DateTime.Parse(Convert.ToString(peixe.Ds_Data_Morte)).ToString("yyyy-MM-dd") ?? null,
+                peixe.ds_doenca,
+                dt_aquisicao = peixe.dt_aquisicao != null ? DateTime.Parse(Convert.ToString(peixe.dt_aquisicao)).ToString("yyyy-MM-dd") : null,
+                peixe.ds_imagem,
+                peixe.id_peixe
             };
 
             return await _context.UpdateAsync(query, parameters);

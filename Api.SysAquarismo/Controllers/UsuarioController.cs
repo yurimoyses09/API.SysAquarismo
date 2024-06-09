@@ -44,7 +44,7 @@ public class UsuarioController : ControllerBase
             if (validacao.Any()) 
             {
                 _logger.LogWarning("O usuario informado ja possui conta no sistema!");
-                return Ok(new Response<CreateUsuarioDTO>(createUsuario, $"Nome de login {createUsuario.Ds_Nome_Usuario_Login} já existe!"));
+                return Ok(new Response<CreateUsuarioDTO>(createUsuario, $"Nome de login {createUsuario.nome_login} já existe!"));
             }
 
             await _repository.InsertUsuario(usuario);
@@ -104,15 +104,15 @@ public class UsuarioController : ControllerBase
     /// <returns>IActionResult</returns>
     /// <response code="201">Dados encontrados com sucesso</response>
     /// <response code="400">Falha buscar dados</response>
-    [HttpGet("{nome_usuario}")]
-    public async Task<IActionResult> BuscaUsuarioPorNomeLogin(string nome_usuario)
+    [HttpGet("{nome_login}")]
+    public async Task<IActionResult> BuscaUsuarioPorNomeLogin(string nome_login)
     {
         try
         {
             _logger.LogInformation("Dados recebidos no request!");
 
             _logger.LogInformation("Buscando dados no usuario no sistema!");
-            Usuario result = await _repository.BuscaDadosUsuario(nome_usuario);
+            Usuario result = await _repository.BuscaDadosUsuario(nome_login);
 
             ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result);
 

@@ -15,13 +15,13 @@ public static class UsuarioQD
     {
         return @$"
             SELECT TOP (1) 
-                 [ID_USUARIO] AS Id_Usuario
-                ,[NOME] AS Nome_Usuario
-                ,[IDADE] AS Idade
-                ,[TELEFONE] AS Ds_Telefone
-                ,[NOME_LOGIN] AS Ds_Nome_Usuario_Login
+                 [ID_USUARIO] AS id_usuario
+                ,[NOME] AS nome_usuario
+                ,[IDADE] AS idade
+                ,[TELEFONE] AS telefone
+                ,[NOME_LOGIN] AS nome_login
             FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_USUARIO]
-            WHERE [NOME_LOGIN] = @nome_usuario";
+            WHERE [NOME_LOGIN] = @nome_login";
     }
 
     /// <summary>
