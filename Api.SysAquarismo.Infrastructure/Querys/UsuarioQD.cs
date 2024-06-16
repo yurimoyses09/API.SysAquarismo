@@ -33,7 +33,7 @@ public static class UsuarioQD
     {
         return $@"
             SELECT 
-                [NOME_LOGIN]
+                [NOME_LOGIN] AS nome_login
             FROM [dbo].[TB_USUARIO] 
             WHERE 
                 [NOME_LOGIN] = @nome_login AND
@@ -49,15 +49,13 @@ public static class UsuarioQD
     {
         return $@"
             SELECT 
-                 [ID_USUARIO]
-                ,[NOME]
-                ,[IDADE]
-                ,[TELEFONE]
-                ,[ID_SEXO]
-                ,[PAIS]
-                ,[NOME_LOGIN]
-                ,[SENHA]
-                ,[SENHA_COFIRMADA]
+                 [ID_USUARIO] AS id_usuario
+                ,[NOME] AS nome_usuario
+                ,[IDADE] AS idade
+                ,[TELEFONE] AS telefone
+                ,[NOME_LOGIN] AS nome_login
+                ,[SENHA] AS senha
+                ,[SENHA_COFIRMADA] AS senha
             FROM [dbo].[TB_USUARIO] 
             WHERE 
                 [NOME_LOGIN] = @nome_login AND

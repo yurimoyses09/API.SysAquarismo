@@ -4,13 +4,9 @@ using Api.SysAquarismo.Infrastructure.Querys;
 
 namespace Api.SysAquarismo.Infrastructure.Data.Repository;
 
-public class PeixeRepository : IPeixeRepository
+public class PeixeRepository(IContext context) : IPeixeRepository
 {
-    private readonly IContext _context;
-    public PeixeRepository(IContext context)
-    {
-        _context = context;
-    }
+    private readonly IContext _context = context;
 
     public async Task<IEnumerable<Peixe>> GetPeixePorId(int id_peixe)
     {
@@ -19,7 +15,7 @@ public class PeixeRepository : IPeixeRepository
             string query = PeixeDQ.BuscaDadosPeixe();
             object parameters = new { id_peixe };
 
-            IEnumerable<Peixe> dados = _context.SelectAsync<Peixe>(query, parameters).Result;
+            IEnumerable<Peixe> dados = await _context.SelectAsync<Peixe>(query, parameters);
 
             return dados;
         }
@@ -55,7 +51,7 @@ public class PeixeRepository : IPeixeRepository
                 peixe.id_usuario
             };
 
-            return _context.InsertAsync(query, parameters).Result;
+            return await _context.InsertAsync(query, parameters);
         }
         catch (Exception)
         {
