@@ -2,6 +2,7 @@
 using Api.SysAquarismo.Domain.Interfaces;
 using Api.SysAquarismo.Domain.Models;
 using Api.SysAquarismo.Domain.Responses;
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,19 +10,14 @@ namespace Api.SysAquarismo.Application.Controllers;
 
 [ApiController]
 [Produces("application/json")]
-[Route("api/v1/usuario")]
-public class UsuarioController : ControllerBase
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
+[Route("api/v{version:apiVersion}/usuario")]
+public class UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger<UsuarioController> logger) : ControllerBase
 {
-    private readonly IMapper _mapper;
-    private readonly IUsuarioRepository _repository;
-    private readonly ILogger<UsuarioController> _logger;
-
-    public UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger<UsuarioController> logger)
-    {
-        _mapper = mapper;
-        _repository = repository;
-        _logger = logger;
-    }
+    private readonly IMapper _mapper = mapper;
+    private readonly IUsuarioRepository _repository = repository;
+    private readonly ILogger<UsuarioController> _logger = logger;
 
     /// <summary>
     /// Cadastra usuario no sistema
@@ -31,6 +27,8 @@ public class UsuarioController : ControllerBase
     /// <response code="201">Usuario cadastrado com sucesos</response>
     /// <response code="400">Falha ao cadastrar usuario</response>
     [HttpPost("cadastra")]
+    [ProducesResponseType(typeof(Response<CreateUsuarioDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Cadastra([FromBody] CreateUsuarioDTO createUsuario)
     {
         try
@@ -40,7 +38,8 @@ public class UsuarioController : ControllerBase
             Usuario usuario = _mapper.Map<Usuario>(createUsuario);
 
             _logger.LogInformation("Buscando usuario com o mesmo login!");
-            List<dynamic> validacao = _repository.BuscaMesmoLogin(usuario).Result;
+            IEnumerable<Usuario> validacao = await _repository.BuscaMesmoLogin(usuario);
+            
             if (validacao.Any()) 
             {
                 _logger.LogWarning("O usuario informado ja possui conta no sistema!");
@@ -68,6 +67,9 @@ public class UsuarioController : ControllerBase
     /// <response code="400">Falha ao cadastrar usuario</response>
     /// <response code="404">Usuario não cadastrado no sistema</response>
     [HttpPost("login")]
+    [ProducesResponseType(typeof(Response<LoginUsuarioDTO?>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromBody] LoginUsuarioDTO loginUsuario)
     {
         try
@@ -77,9 +79,9 @@ public class UsuarioController : ControllerBase
             Usuario usuario = _mapper.Map<Usuario>(loginUsuario);
 
             _logger.LogInformation("Efetuando login no sistema!");
-            List<dynamic> usuarioValido = await _repository.LoginUsuario(usuario);
+            IEnumerable<Usuario> usuarioValido = await _repository.LoginUsuario(usuario);
 
-            if (usuarioValido != null && usuarioValido.Count > 0) 
+            if (usuarioValido != null && usuarioValido.Any()) 
             {
                 _logger.LogInformation("Login efetuado com sucesso!");
                 return Ok(new Response<LoginUsuarioDTO?>(loginUsuario, "Login efetuado com sucesso!"));
@@ -87,7 +89,7 @@ public class UsuarioController : ControllerBase
             else 
             {
                 _logger.LogWarning("Usuario não cadastrado no sistema!");
-                return BadRequest(new Response<LoginUsuarioDTO?>(loginUsuario, "Usuario não cadastrado no sistema!"));
+                return NotFound(new Response<LoginUsuarioDTO?>(loginUsuario, "Usuario não cadastrado no sistema!"));
             }
         }
         catch (Exception ex)
@@ -105,6 +107,9 @@ public class UsuarioController : ControllerBase
     /// <response code="201">Dados encontrados com sucesso</response>
     /// <response code="400">Falha buscar dados</response>
     [HttpGet("{nome_login}")]
+    [ProducesResponseType(typeof(Response<LoginUsuarioDTO?>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> BuscaUsuarioPorNomeLogin(string nome_login)
     {
         try
@@ -114,11 +119,13 @@ public class UsuarioController : ControllerBase
             _logger.LogInformation("Buscando dados no usuario no sistema!");
             Usuario result = await _repository.BuscaDadosUsuario(nome_login);
 
+            if (result == null)
+                return NotFound(new Response<ReadUsuarioDTO>(null, "Usuario nao foi encontrado no sistema"));
+
             ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result);
 
             _logger.LogInformation("Dados recuperados com sucesso!");
-
-            return BadRequest(new Response<ReadUsuarioDTO?>(dados, "Dados recuperados com sucesso!"));
+            return Ok(new Response<ReadUsuarioDTO?>(dados, "Dados recuperados com sucesso!"));
         }
         catch (Exception ex)
         {

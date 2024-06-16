@@ -41,7 +41,7 @@ public class UsuarioRepository(IContext context) : IUsuarioRepository
         }
     }
 
-    public async Task<dynamic> BuscaMesmoLogin(Usuario usuario)
+    public async Task<IEnumerable<Usuario>> BuscaMesmoLogin(Usuario usuario)
     {
         try
         {
@@ -53,7 +53,7 @@ public class UsuarioRepository(IContext context) : IUsuarioRepository
                 usuario_ativo = 1
             };
 
-            return _context.SelectAsync(query, parameters).Result;
+            return _context.SelectAsync<Usuario>(query, parameters).Result;
         }
         catch (Exception)
         {
@@ -98,7 +98,7 @@ public class UsuarioRepository(IContext context) : IUsuarioRepository
         }
     }
 
-    public async Task<dynamic> LoginUsuario(Usuario usuario)
+    public async Task<IEnumerable<Usuario>> LoginUsuario(Usuario usuario)
     {
         try
         {
@@ -111,7 +111,7 @@ public class UsuarioRepository(IContext context) : IUsuarioRepository
                 usuario_ativo = 1
             };
 
-            return _context.SelectAsync(query, parameters).Result;
+            return _context.SelectAsync<Usuario>(query, parameters).Result;
         }
         catch (Exception)
         {

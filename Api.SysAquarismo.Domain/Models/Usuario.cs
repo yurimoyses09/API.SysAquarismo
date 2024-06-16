@@ -22,9 +22,6 @@ public class Usuario
         telefone = usuario.telefone.ToString();
         idade = usuario.idade;
         nome_login = usuario.nome_login;
-        peixes = new List<Peixe>();
-
-        foreach (Peixe pe in peixe)
-            peixes.Add(pe);
+        peixes = [.. peixe];
     }
 }

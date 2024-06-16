@@ -1,6 +1,4 @@
-﻿using Api.SysAquarismo.Domain.Models;
-
-namespace Api.SysAquarismo.Infrastructure.Querys;
+﻿namespace Api.SysAquarismo.Infrastructure.Querys;
 
 public static class PeixeDQ
 {
