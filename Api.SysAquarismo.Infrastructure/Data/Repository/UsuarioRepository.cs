@@ -8,24 +8,14 @@ public class UsuarioRepository(IContext context) : IUsuarioRepository
 {
     private readonly IContext _context = context;
 
-    public async Task<Usuario> BuscaDadosUsuario(string nome_login)
+    public async Task<IEnumerable<Usuario>> BuscaDadosUsuario(string nome_login)
     {
         try
         {
-            string queryUsuario = UsuarioQD.BuscaDadosUsuario();
+            string query = UsuarioQD.BuscaDadosUsuario();
             object parameters_usuario = new { nome_login };
-            IEnumerable<Usuario> dataUser = _context.SelectAsync<Usuario>(queryUsuario, parameters_usuario).Result;
 
-            int id_usuario = dataUser.FirstOrDefault().id_usuario;
-
-            string queryPeixe = PeixeDQ.BuscaDadosPeixeLogin();
-            object parameters_peixe = new { id_usuario };
-            IEnumerable<Peixe> peixes = _context.SelectAsync<Peixe>(queryPeixe, parameters_peixe).Result;
-
-            Usuario dados = new(peixes, dataUser.FirstOrDefault());
-
-            return dados;
-
+            return await _context.SelectManyAsync<Usuario, Peixe, int>(query, parent => parent.id_usuario, child => child.id_peixe, (parent, child) => parent.peixes.Add(child), parameters_usuario, "id_peixe");
         }
         catch (ArgumentNullException)
         {

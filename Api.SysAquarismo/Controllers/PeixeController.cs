@@ -11,7 +11,6 @@ namespace Api.SysAquarismo.Application.Controllers;
 [ApiController]
 [Produces("application/json")]
 [ApiVersion("1.0")]
-[ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/peixe")]
 public class PeixeController(IMapper mapper, IPeixeRepository repository, ILogger<PeixeController> logger) : ControllerBase
 {

@@ -14,13 +14,29 @@ public static class UsuarioQD
     internal static string BuscaDadosUsuario()
     {
         return @$"
-            SELECT TOP (1) 
-                 [ID_USUARIO] AS id_usuario
-                ,[NOME] AS nome_usuario
-                ,[IDADE] AS idade
-                ,[TELEFONE] AS telefone
-                ,[NOME_LOGIN] AS nome_login
-            FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_USUARIO]
+            SELECT
+                 U.[ID_USUARIO] AS id_usuario
+                ,U.[NOME] AS nome_usuario
+                ,U.[IDADE] AS idade
+                ,U.[TELEFONE] AS telefone
+                ,U.[NOME_LOGIN] AS nome_login
+            	,P.[ID_PEIXE] AS id_peixe
+                ,P.[NOME] AS nome_peixe
+                ,P.[ESPECIE] AS nome_especie
+                ,P.[ID_USUARIO] AS id_usuario
+                ,STS.[ID_STATUS_SAUDE] AS id_saude
+                ,S.[ID_SEXO] AS sexo 
+            FROM [dbo].[TB_USUARIO] U
+            
+            INNER JOIN [dbo].[TB_PEIXE] P ON
+            	P.[ID_USUARIO] = U.[ID_USUARIO]
+            
+            INNER JOIN [dbo].[TB_SEXO] S ON
+                 S.[ID_SEXO] = P.[ID_SEXO]
+            
+            INNER JOIN [dbo].[TB_STATUS_SAUDE] STS ON
+                 STS.[ID_STATUS_SAUDE] = P.[ID_STATUS_SAUDE]
+            
             WHERE [NOME_LOGIN] = @nome_login";
     }
 

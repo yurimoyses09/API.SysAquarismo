@@ -1,7 +1,8 @@
 ﻿namespace Api.SysAquarismo.Infrastructure.Querys;
 
-public static class PeixeDQ
+public static class PeixeQD
 {
+    [Obsolete("Metodo nao esta sendo mais utlizado")]
     internal static string BuscaDadosPeixeLogin()
     {
         return @$"
@@ -12,41 +13,17 @@ public static class PeixeDQ
                   ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS id_saude
                   ,[ID_USUARIO] AS id_usuario
 	              ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] AS sexo 
-                FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
+                FROM 
+                    [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
-                [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
+                    [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
 
                 INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
-                [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
+                    [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
                 WHERE [ID_USUARIO] = @id_usuario";
     }
 
-    internal static string BuscaDadosPeixe()
-    {
-        return @$"
-                SELECT
-            	   [ID_PEIXE] AS id_peixe
-                  ,[NOME] AS nome_peixe
-                  ,[ESPECIE] AS nome_especie
-                  ,[DS_PEIXE] AS descricao
-                  ,[dbo].[TB_PEIXE].[ID_SEXO] AS sexo
-                  ,[DS_STATUS_SAUDE] AS Ds_status_Saude
-                  ,[PESO] AS peso
-                  ,[TAMANHO] AS tamanho
-                  ,[DT_MORTE] AS dt_morte
-                  ,[DS_DOENCA] AS Ds_doenca
-                  ,[DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] AS id_saude
-                  ,[DT_AQUISICAO] AS dt_aquisicao
-                  ,[IMG_PEIXE] AS ds_imagem
-                  ,[ID_USUARIO] AS id_usuario
-                FROM [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE]
-                INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO] ON
-                [DB_SYSAQUARISMO_DEV].[dbo].[TB_SEXO].[ID_SEXO] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_SEXO]
-
-                INNER JOIN [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE] ON
-                [DB_SYSAQUARISMO_DEV].[dbo].[TB_STATUS_SAUDE].[ID_STATUS_SAUDE] = [DB_SYSAQUARISMO_DEV].[dbo].[TB_PEIXE].[ID_STATUS_SAUDE]
-              WHERE [ID_PEIXE] = @id_peixe";
-    }
+    internal static string BuscaDadosPeixe() => @$"[dbo].[SP_BUSCA_PEIXE_POR_ID]";
 
     internal static string QueryCriaPeixe()
     {
@@ -81,10 +58,7 @@ public static class PeixeDQ
                    )";
     }
 
-    internal static string QueryDeletaPeixe()
-    {
-        return @"DELETE FROM [dbo].[TB_PEIXE] WHERE ID_PEIXE = @id_peixe";
-    }
+    internal static string QueryDeletaPeixe() => @"[dbo].[SP_DELETA_PEIXE_POR_ID]";
 
     internal static string QueryUpdatePeixe()
     {

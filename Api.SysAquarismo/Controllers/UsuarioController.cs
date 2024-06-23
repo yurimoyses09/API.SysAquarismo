@@ -11,7 +11,6 @@ namespace Api.SysAquarismo.Application.Controllers;
 [ApiController]
 [Produces("application/json")]
 [ApiVersion("1.0")]
-[ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/usuario")]
 public class UsuarioController(IMapper mapper, IUsuarioRepository repository, ILogger<UsuarioController> logger) : ControllerBase
 {
@@ -102,10 +101,8 @@ public class UsuarioController(IMapper mapper, IUsuarioRepository repository, IL
     /// <summary>
     /// Busca todos os dados do usuario e os peixes relacionados a ele
     /// </summary>
-    /// <param name="nome_usuario"></param>
-    /// <returns>IActionResult</returns>
-    /// <response code="201">Dados encontrados com sucesso</response>
-    /// <response code="400">Falha buscar dados</response>
+    /// <param name="nome_login"></param>
+    /// <returns></returns>
     [HttpGet("{nome_login}")]
     [ProducesResponseType(typeof(Response<LoginUsuarioDTO?>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -117,12 +114,12 @@ public class UsuarioController(IMapper mapper, IUsuarioRepository repository, IL
             _logger.LogInformation("Dados recebidos no request!");
 
             _logger.LogInformation("Buscando dados no usuario no sistema!");
-            Usuario result = await _repository.BuscaDadosUsuario(nome_login);
+            var result = await _repository.BuscaDadosUsuario(nome_login);
 
             if (result == null)
                 return NotFound(new Response<ReadUsuarioDTO>(null, "Usuario nao foi encontrado no sistema"));
 
-            ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result);
+            ReadUsuarioDTO dados = _mapper.Map<ReadUsuarioDTO>(result.FirstOrDefault());
 
             _logger.LogInformation("Dados recuperados com sucesso!");
             return Ok(new Response<ReadUsuarioDTO?>(dados, "Dados recuperados com sucesso!"));
