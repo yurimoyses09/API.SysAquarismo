@@ -1,14 +1,8 @@
 ﻿namespace Api.SysAquarismo.Domain.Responses;
 
-public class Response<TData>
+public class Response<TData>(TData? data, string? message = null)
 {
-    public TData? data { get; set; }
+    public TData? data { get; set; } = data;
 
-    public string? message { get; set; }
-
-    public Response(TData? data, string? message = null)
-    {
-        this.data = data;
-        this.message = message;
-    }
+    public string? message { get; set; } = message;
 }

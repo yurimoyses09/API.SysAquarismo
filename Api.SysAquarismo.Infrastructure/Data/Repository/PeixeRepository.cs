@@ -12,10 +12,10 @@ public class PeixeRepository(IContext context) : IPeixeRepository
     {
         try
         {
-            string query = PeixeDQ.BuscaDadosPeixe();
+            string query = PeixeQD.BuscaDadosPeixe();
             object parameters = new { id_peixe };
 
-            IEnumerable<Peixe> dados = await _context.SelectAsync<Peixe>(query, parameters);
+            IEnumerable<Peixe> dados = await _context.ReadProcedureAsync<Peixe>(query, parameters);
 
             return dados;
         }
@@ -33,7 +33,7 @@ public class PeixeRepository(IContext context) : IPeixeRepository
     {
         try
         {
-            string query = PeixeDQ.QueryCriaPeixe();
+            string query = PeixeQD.QueryCriaPeixe();
 
             object parameters = new
             {
@@ -67,18 +67,14 @@ public class PeixeRepository(IContext context) : IPeixeRepository
     {
         try
         {
-            string query = PeixeDQ.QueryDeletaPeixe();
+            string query = PeixeQD.QueryDeletaPeixe();
 
-            object parameters = new
-            {
-                peixe.id_peixe
-            };
+            object parameters = new { peixe.id_peixe };
 
-            return await _context.DeleteAsync(query, parameters);
+            return await _context.ExecuteProcedureAsync(query, parameters);
         }
         catch (Exception)
         {
-
             throw;
         }
         finally
@@ -91,7 +87,7 @@ public class PeixeRepository(IContext context) : IPeixeRepository
     {
         try
         {
-            string query = PeixeDQ.QueryUpdatePeixe();
+            string query = PeixeQD.QueryUpdatePeixe();
 
             object parameters = new
             {
@@ -120,13 +116,4 @@ public class PeixeRepository(IContext context) : IPeixeRepository
             await _context.CloseConnection();
         }
     }
-
-    #region [ Não implementado ]
-
-    public Task GetPeixe()
-    {
-        throw new NotImplementedException();
-    }
-
-    #endregion
 }

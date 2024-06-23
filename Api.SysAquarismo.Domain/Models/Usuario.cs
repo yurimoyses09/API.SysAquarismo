@@ -13,7 +13,7 @@ public class Usuario
     public string pais { get; set; }
     public List<Peixe> peixes { get; set; }
 
-    public Usuario() { }
+    public Usuario() { peixes = []; }
 
     public Usuario(IEnumerable<Peixe> peixe, Usuario usuario)
     {
